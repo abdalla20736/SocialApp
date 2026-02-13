@@ -1,0 +1,178 @@
+<div class="min-h-screen flex mt-10 items-center flex-col">
+  <h1 class="text-center text-5xl text-blue-700 mb-8">Linked Posts</h1>
+  <div class="min-w-10 w-11/12 lg:w-5/12 bg-white rounded-[5px] p-8">
+    <h2 class="text-2xl text-blue-700 mb-3">Register now</h2>
+    <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+      @if (userForm.get('name')?.invalid && userForm.get('name')?.touched) {
+        <p class="mt-1 text-sm text-red-600">
+          @if (userForm.get('name')?.errors?.['required']) {
+            Name is required
+          }
+          @if (userForm.get('name')?.errors?.['minlength']) {
+            Name must be at least
+            {{ userForm.get('name')?.errors?.['minlength'].requiredLength }} characters
+          }
+        </p>
+      }
+      <div class="mb-6">
+        <input
+          type="text"
+          id="full-name"
+          formControlName="name"
+          class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
+          [class.border-red-600]="userForm.get('name')?.invalid && userForm.get('name')?.touched"
+          placeholder="Type your name.."
+        />
+      </div>
+
+      @if (userForm.get('email')?.invalid && userForm.get('email')?.touched) {
+        <p class="mt-1 text-sm text-red-600">
+          @if (userForm.get('email')?.errors?.['required']) {
+            Email is required
+          }
+          @if (userForm.get('email')?.errors?.['minlength']) {
+            Email must be at least
+            {{ userForm.get('email')?.errors?.['minlength'].requiredLength }} characters
+          }
+          @if (userForm.get('email')?.errors?.['email']) {
+            Please enter a valid email address
+          }
+        </p>
+      }
+
+      <div class="mb-6">
+        <input
+          type="email"
+          id="email"
+          formControlName="email"
+          class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
+          [class.border-red-600]="userForm.get('email')?.invalid && userForm.get('email')?.touched"
+          placeholder="Type your email..."
+          required
+        />
+      </div>
+
+      @if (userForm.get('password')?.invalid && userForm.get('password')?.touched) {
+        <p class="mt-1 text-sm text-red-600">
+          @if (userForm.get('password')?.errors?.['required']) {
+            Password is required
+          }
+          @if (userForm.get('password')?.errors?.['pattern']) {
+            Password must contain uppercase, lowercase, number and special character
+          }
+        </p>
+      }
+      <div class="mb-6">
+        <input
+          type="password"
+          formControlName="password"
+          id="password"
+          class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
+          [class.border-red-600]="
+            userForm.get('password')?.invalid && userForm.get('password')?.touched
+          "
+          placeholder="Type your password"
+        />
+      </div>
+      @if (userForm.get('rePassword')?.invalid && userForm.get('rePassword')?.touched) {
+        <p class="mt-1 text-sm text-red-600">
+          @if (userForm.get('rePassword')?.errors?.['required']) {
+            Confirm password is required
+          }
+        </p>
+      }
+      @if (userForm.hasError('passwordMismatch') && userForm.get('rePassword')?.touched) {
+        <p class="mt-1 text-sm text-red-600">Passwords do not match</p>
+      }
+      <div class="mb-6">
+        <input
+          type="password"
+          formControlName="rePassword"
+          id="confirm_password"
+          class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
+          [class.border-red-600]="
+            userForm.get('rePassword')?.invalid && userForm.get('rePassword')?.touched
+          "
+          placeholder="confirm password"
+        />
+      </div>
+      @if (userForm.get('dateOfBirth')?.invalid && userForm.get('dateOfBirth')?.touched) {
+        <p class="mt-1 text-sm text-red-600">
+          @if (userForm.get('dateOfBirth')?.errors?.['required']) {
+            Date of birth is required
+          }
+          @if (userForm.get('dateOfBirth')?.errors?.['invalidDate']) {
+            Please enter a valid date
+          }
+          @if (userForm.get('dateOfBirth')?.errors?.['futureDate']) {
+            Date of birth cannot be in the future
+          }
+          @if (userForm.get('dateOfBirth')?.errors?.['minAge']) {
+            You must be at least
+            {{ userForm.get('dateOfBirth')?.errors?.['minAge'].requiredAge }} years old
+          }
+          @if (userForm.get('dateOfBirth')?.errors?.['maxAge']) {
+            Please enter a valid date of birth
+          }
+        </p>
+      }
+      <div class="mb-6">
+        <div class="relative">
+          <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+            <i class="fa-solid fa-calendar text-body"></i>
+          </div>
+          <input
+            datepicker
+            id="default-datepicker"
+            formControlName="dateOfBirth"
+            type="text"
+            (changeDate)="onDateChange($event)"
+            class="block w-full ps-9 pe-3 py-2.5 bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand px-3 py-2.5 shadow-xs placeholder:text-body"
+            [class.border-red-600]="
+              userForm.get('dateOfBirth')?.invalid && userForm.get('dateOfBirth')?.touched
+            "
+            placeholder="Select date"
+          />
+        </div>
+      </div>
+      @if (userForm.get('gender')?.invalid && userForm.get('gender')?.touched) {
+        <p class="mb-3 text-sm text-red-600">Please select a gender</p>
+      }
+      <div class="flex items-start mb-6">
+        <div class="flex items-center mb-4">
+          <input
+            id="default-radio-1"
+            type="radio"
+            value="male"
+            formControlName="gender"
+            class="w-4 h-4 focus:border-transparent accent-blue-700"
+          />
+          <label for="default-radio-1" class="select-none ms-2 text-sm font-medium text-heading"
+            >Male</label
+          >
+        </div>
+        <div class="flex items-center">
+          <input
+            id="default-radio-2"
+            type="radio"
+            value="female"
+            formControlName="gender"
+            class="w-4 h-4 ms-2 checked:border-transparent checked:ring-0 checked:outline-0 focus:border-transparent accent-blue-700"
+          />
+          <label for="default-radio-2" class="select-none ms-2 text-sm font-medium text-heading"
+            >Female</label
+          >
+        </div>
+      </div>
+
+      <button
+        [disabled]="isLoading"
+        [class.bg-red-500]="isLoading"
+        type="submit"
+        class="text-white bg-brand box-border border border-transparent hover:bg-brand-strong focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none"
+      >
+        Signup
+      </button>
+    </form>
+  </div>
+</div>
