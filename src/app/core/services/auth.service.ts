@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Inject, Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { Observable, tap } from 'rxjs';
-import { SigninRequest, SigninResponse, User } from '../models/user.model';
+import { SigninRequest, SigninResponse, SignupRequest } from '../models/auth.model';
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
 
@@ -16,7 +16,7 @@ export class AuthService {
   private cookieService = inject(CookieService);
   private router = inject(Router);
 
-  register(userData: User): Observable<any> {
+  register(userData: SignupRequest): Observable<any> {
     return this.httpClient.post(`${this.baseUrl}/users/signup`, userData);
   }
   login(credentails: SigninRequest): Observable<SigninResponse> {
@@ -28,14 +28,44 @@ export class AuthService {
   }
   logout(): void {
     this.cookieService.delete(this.TOKEN_COOKIE_NAME);
-    this.router.navigate(['/signin']);
+    this.router.navigate(['/login']);
   }
 
   getToken(): string {
-    return this.cookieService.get(this.TOKEN_COOKIE_NAME);
+    const token = this.cookieService.get(this.TOKEN_COOKIE_NAME);
+
+    if (!token || this.isTokenExpired(token)) {
+      this.cookieService.delete(this.TOKEN_COOKIE_NAME);
+      return '';
+    }
+
+    return token;
   }
 
   isAuthenticated(): boolean {
-    return this.cookieService.check(this.TOKEN_COOKIE_NAME);
+    return !!this.getToken();
+  }
+
+  private isTokenExpired(token: string): boolean {
+    try {
+      const payload = token.split('.')[1];
+      if (!payload) {
+        return false;
+      }
+
+      const normalizedPayload = payload.replace(/-/g, '+').replace(/_/g, '/');
+      const padding = '='.repeat((4 - (normalizedPayload.length % 4)) % 4);
+      const decodedPayload = atob(normalizedPayload + padding);
+      const parsedPayload = JSON.parse(decodedPayload) as { exp?: number };
+
+      if (typeof parsedPayload.exp !== 'number') {
+        return false;
+      }
+
+      const currentTimeInSeconds = Math.floor(Date.now() / 1000);
+      return parsedPayload.exp <= currentTimeInSeconds;
+    } catch {
+      return false;
+    }
   }
 }

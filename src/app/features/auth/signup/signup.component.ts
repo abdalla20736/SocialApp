@@ -6,6 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { initFlowbite } from 'flowbite';
 import { AuthService } from '../../../core/services/auth.service';
+import { HttpErrorResponse } from '@angular/common/http';
 import {
   FormBuilder,
   FormControl,
@@ -15,10 +16,11 @@ import {
   AbstractControl,
   ValidationErrors,
 } from '@angular/forms';
-import { User } from '../../../core/models/user.model';
+import { SignupRequest } from '../../../core/models/auth.model';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { debounce, debounceTime, finalize, tap } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 
 type FormControls<T> = {
   [K in keyof T]: FormControl<T[K] | null>;
@@ -41,12 +43,13 @@ type FormControls<T> = {
 export class Signup implements OnInit {
   private authService = inject(AuthService);
   private router = inject(Router);
+  private toastrService = inject(ToastrService);
 
-  userForm: FormGroup<FormControls<User>>;
+  userForm: FormGroup<FormControls<SignupRequest>>;
   isLoading = false;
 
   constructor() {
-    this.userForm = new FormGroup<FormControls<User>>(
+    this.userForm = new FormGroup<FormControls<SignupRequest>>(
       {
         email: new FormControl('', [
           Validators.required,
@@ -118,7 +121,7 @@ export class Signup implements OnInit {
 
   onSubmit(): void {
     const user = this.userForm.value;
-    const userData: User = {
+    const userData: SignupRequest = {
       name: user.name || '',
       email: user.email || '',
       password: user.password || '',
@@ -136,12 +139,20 @@ export class Signup implements OnInit {
           finalize(() => (this.isLoading = false)),
         )
         .subscribe({
-          next: (response) => {
-            console.log('Registration successful:', response);
-            this.router.navigate(['/signin']);
+          next: () => {
+            this.toastrService.success('Registration successful!', 'Success');
+            this.router.navigate(['/login']);
           },
-          error: (error) => {
-            console.error('Registration failed:', error);
+          error: (error: HttpErrorResponse) => {
+            if (error.status === 409) {
+              this.toastrService.warning(
+                'This email is already registered. Please sign in.',
+                'Conflict',
+              );
+              return;
+            }
+
+            this.toastrService.error('Registration failed. Please try again.', 'Error');
           },
         });
     } else {

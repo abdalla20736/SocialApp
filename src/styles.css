@@ -1,6 +1,7 @@
 @import 'tailwindcss';
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 @import 'flowbite/src/themes/default';
+@import 'ngx-toastr/toastr';
 @plugin "flowbite/plugin";
 @source "../node_modules/flowbite";
 
@@ -10,5 +11,10 @@ body {
 }
 body {
   margin: 0;
-  font-family: Roboto, 'Helvetica Neue', sans-serif;
+  font-family: 'Cairo Variable', sans-serif;
+  color: var(--color-gray-700);
+}
+
+.blured-card {
+  @apply bg-white/20 backdrop-blur-sm border border-white/30 rounded-xl flex  gap-4 text-white hover:scale-105 transition-transform duration-200;
 }

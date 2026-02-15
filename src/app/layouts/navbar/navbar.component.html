@@ -15,7 +15,11 @@
         data-dropdown-placement="bottom"
       >
         <span class="sr-only">Open user menu</span>
-        <img class="w-8 h-8 rounded-full" src="/assets/images/profile.png" alt="user photo" />
+        <img
+          class="w-8 h-8 rounded-full"
+          [src]="userProfile.photo || '/assets/images/profile.png'"
+          alt="user photo"
+        />
       </button>
       <!-- Dropdown menu -->
       <div
@@ -23,14 +27,14 @@
         id="user-dropdown"
       >
         <div class="px-4 py-3 text-sm border-b border-default">
-          <span class="block text-heading font-medium">Joseph McFall</span>
-          <span class="block text-body truncate">name@linkeposts.com</span>
+          <span class="block text-heading font-medium">{{ userProfile.name }}</span>
+          <span class="block text-body truncate">{{ userProfile.email }}</span>
         </div>
         <ul class="p-2 text-sm text-body font-medium" aria-labelledby="user-menu-button">
           <li>
             <a
-              href="#"
-              class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded"
+              (click)="onLogout($event)"
+              class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded hover:cursor-pointer"
               >Sign out</a
             >
           </li>

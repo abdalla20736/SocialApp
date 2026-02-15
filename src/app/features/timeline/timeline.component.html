@@ -1,1 +1,51 @@
-<p>timeline works!</p>
+<section class="create-post bg-white rounded-2xl shadow-lg overflow-hidden w-full p-5">
+  <div
+    class="current-profile p-2 text-white hover:bg-gray-50 cursor-pointer transition-colors duration-200 space-y-6"
+  >
+    <div class="flex items-center rounded-xl gap-2">
+      <img
+        [src]="
+          userProfile.photo || 'https://linked-posts.routemisr.com/uploads/default-profile.png'
+        "
+        alt="follower-3"
+        class="rounded-full size-12 object-cover"
+      />
+      <div>
+        <p class="text-gray-800 font-medium text-base leading-4">Create a Post</p>
+        <span class="text-sm text-gray-400 -mt-1">Share your thoughts with the world </span>
+      </div>
+    </div>
+    <form>
+      <div class="relative">
+        <textarea
+          placeholder="what's on your mind ?"
+          class="rounded-2xl w-full bg-gray-100 border border-gray-400/40 min-h-24 pl-11 px-4 py-3 transition-all duration-200 placeholder-gray-400"
+          name="body"
+        ></textarea>
+        <i class="fa-solid fa-lightbulb text-gray-400 absolute left-4 top-1/2 -translate-y-1/2"></i>
+      </div>
+      <div class="flex justify-between items-center border-t border-gray-400/20 pt-5 mt-5">
+        <button
+          class="px-4 py-3 text-base font-medium text-gray-500 border border-gray-500 rounded-xl hover:bg-gray-500 hover:text-white transition-all duration-200"
+        >
+          <i class="fa-solid fa-image"></i>
+          Photo
+        </button>
+        <button
+          class="px-4 py-2 text-base font-medium rounded-xl border-none bg-linear-to-br from-blue-500 to-cyan-400 text-white flex gap-1 items-center disabled:opacity-70"
+        >
+          Post
+          <i class="fa-solid fa-paper-plane text-white ml-2"></i>
+        </button>
+      </div>
+    </form>
+  </div>
+</section>
+
+<section class="latest-posts py-10">
+  <h2 class="text-2xl font-medium text-gray-500">Latest Posts</h2>
+
+  <div class="latest-posts-list space-y-5">
+    <app-post-card></app-post-card>
+  </div>
+</section>

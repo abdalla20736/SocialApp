@@ -1,4 +1,4 @@
-export interface User {
+export interface SignupRequest {
   name: string;
   email: string;
   password: string;
@@ -6,6 +6,9 @@ export interface User {
   dateOfBirth: string;
   gender: string;
 }
+
+
+
 
 export interface SigninRequest {
   email: string;
@@ -15,4 +18,3 @@ export interface SigninRequest {
 export interface SigninResponse {
   token: string;
 }
-

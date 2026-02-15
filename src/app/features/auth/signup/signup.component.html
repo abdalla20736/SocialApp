@@ -4,15 +4,16 @@
     <h2 class="text-2xl text-blue-700 mb-3">Register now</h2>
     <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
       @if (userForm.get('name')?.invalid && userForm.get('name')?.touched) {
-        <p class="mt-1 text-sm text-red-600">
-          @if (userForm.get('name')?.errors?.['required']) {
-            Name is required
-          }
-          @if (userForm.get('name')?.errors?.['minlength']) {
+        @if (userForm.get('name')?.errors?.['required']) {
+          <p class="mt-1 text-sm text-red-600">Name is required</p>
+        }
+
+        @if (userForm.get('name')?.errors?.['minlength']) {
+          <p class="mt-1 text-sm text-red-600">
             Name must be at least
             {{ userForm.get('name')?.errors?.['minlength'].requiredLength }} characters
-          }
-        </p>
+          </p>
+        }
       }
       <div class="mb-6">
         <input
@@ -26,18 +27,18 @@
       </div>
 
       @if (userForm.get('email')?.invalid && userForm.get('email')?.touched) {
-        <p class="mt-1 text-sm text-red-600">
-          @if (userForm.get('email')?.errors?.['required']) {
-            Email is required
-          }
-          @if (userForm.get('email')?.errors?.['minlength']) {
+        @if (userForm.get('email')?.errors?.['required']) {
+          <p class="mt-1 text-sm text-red-600">Email is required</p>
+        }
+        @if (userForm.get('email')?.errors?.['minlength']) {
+          <p class="mt-1 text-sm text-red-600">
             Email must be at least
             {{ userForm.get('email')?.errors?.['minlength'].requiredLength }} characters
-          }
-          @if (userForm.get('email')?.errors?.['email']) {
-            Please enter a valid email address
-          }
-        </p>
+          </p>
+        }
+        @if (userForm.get('email')?.errors?.['email']) {
+          <p class="mt-1 text-sm text-red-600">Please enter a valid email address</p>
+        }
       }
 
       <div class="mb-6">
@@ -53,14 +54,14 @@
       </div>
 
       @if (userForm.get('password')?.invalid && userForm.get('password')?.touched) {
-        <p class="mt-1 text-sm text-red-600">
-          @if (userForm.get('password')?.errors?.['required']) {
-            Password is required
-          }
-          @if (userForm.get('password')?.errors?.['pattern']) {
+        @if (userForm.get('password')?.errors?.['required']) {
+          <p class="mt-1 text-sm text-red-600">Password is required</p>
+        }
+        @if (userForm.get('password')?.errors?.['pattern']) {
+          <p class="mt-1 text-sm text-red-600">
             Password must contain uppercase, lowercase, number and special character
-          }
-        </p>
+          </p>
+        }
       }
       <div class="mb-6">
         <input
@@ -167,9 +168,10 @@
 
       <button
         [disabled]="isLoading"
-        [class.bg-red-500]="isLoading"
+        [class.bg-gray-500]="isLoading"
+        [textContent]="isLoading ? 'Signup...' : 'Signup'"
         type="submit"
-        class="text-white bg-brand box-border border border-transparent hover:bg-brand-strong focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none"
+        class="text-white bg-brand box-border border border-transparent hover:bg-brand-strong disabled:hover:bg-gray-500 disabled:cursor-not-allowed focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none"
       >
         Signup
       </button>
