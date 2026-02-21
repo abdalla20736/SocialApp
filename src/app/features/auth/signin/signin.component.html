@@ -1,220 +1,94 @@
-<div class="h-full">
-  <div class="min-h-screen flex flex-col lg:flex-row">
-    <div class="auth-hero-bg w-full lg:w-1/2">
-      <div class="p-10 overflow-hidden w-full h-full justify-between flex flex-col">
-        <div>
-          <a routerLink="/">
-            <h1 class="text-white text-2xl font-bold flex items-center gap-3">
-              <span
-                class="size-12 text-lg font-bold flex justify-center items-center bg-white/40 border border-white/30 rounded-xl"
-                >S</span
-              >
-              SocialHub
-            </h1>
-          </a>
-        </div>
-        <div class="space-y-6">
-          <div class="space-y-6 text-white">
-            <h2 class="text-5xl font-bold w-full">
-              Welcome Back
-              <p class="bg-linear-to-r from-cyan-300 to-cyan-100 bg-clip-text text-transparent">
-                to SocialHub App
-              </p>
-            </h2>
-            <p>Signin to connect people all over the world</p>
-          </div>
-          <section>
-            <ul class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-              <li>
-                <app-feature-card
-                  icon="fa-message"
-                  iconColor="text-green-300"
-                  backgroundColor="bg-teal-400/20"
-                >
-                  <ng-container title>Real-time Chat </ng-container>
-                  <ng-container description> Instant messaging </ng-container>
-                </app-feature-card>
-              </li>
-              <li>
-                <app-feature-card
-                  icon="fa-image"
-                  iconColor="text-blue-100"
-                  backgroundColor="bg-blue-400/20"
-                >
-                  <ng-container title>Share Media </ng-container>
-                  <ng-container description> Photos & videos </ng-container>
-                </app-feature-card>
-              </li>
-              <li>
-                <app-feature-card
-                  icon="fa-bell"
-                  iconColor="text-pink-100"
-                  backgroundColor="bg-pink-400/20"
-                >
-                  <ng-container title>Smart Alerts </ng-container>
-                  <ng-container description> Stay updated </ng-container>
-                </app-feature-card>
-              </li>
-              <li>
-                <app-feature-card
-                  icon="fa-users"
-                  iconColor="text-green-300"
-                  backgroundColor="bg-teal-400/20"
-                >
-                  <ng-container title>Communities </ng-container>
-                  <ng-container description> Find your tribe </ng-container>
-                </app-feature-card>
-              </li>
-            </ul>
-          </section>
-          <section>
-            <ul class="flex items-center gap-4">
-              <li>
-                <div class="text-white">
-                  <div class="flex gap-2 items-center">
-                    <i class="fa-solid fa-users"></i>
-                    <span class="text-white text-2xl font-bold">2M+</span>
-                  </div>
-                  <p>Active Users</p>
-                </div>
-              </li>
-              <li>
-                <div class="text-white">
-                  <div class="flex gap-2 items-center">
-                    <i class="fa-solid fa-heart"></i>
-                    <span class="text-white text-2xl font-bold">10M+</span>
-                  </div>
-                  <p>Posts Shared</p>
-                </div>
-              </li>
-              <li>
-                <div class="text-white">
-                  <div class="flex gap-2 items-center">
-                    <i class="fa-solid fa-message"></i>
-                    <span class="text-white text-2xl font-bold">50M+</span>
-                  </div>
-                  <p>Messages Sent</p>
-                </div>
-              </li>
-            </ul>
-          </section>
-        </div>
-        <section class="review space-y-4">
-          <div class="blured-card p-4 flex-col">
-            <div class="rating text-yellow-300 flex gap-1 items-center">
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
-            </div>
-            <p class="text-lg italic">
-              "SocialHub has completely changed how I connect with friends and discover new
-              communities. The experience is seamless!"
-            </p>
-            <div class="flex gap-3 items-center">
-              <img
-                src="images/my-profile.jpg"
-                alt="reviewer photo"
-                class="size-12 rounded-full object-cover"
-              />
-              <div>
-                <p class="text-base italic">Abdullah Mohamed</p>
-                <span>Software Engineer</span>
-              </div>
-            </div>
-          </div>
-        </section>
-      </div>
-    </div>
-    <div
-      class="min-h-screen flex pt-10 items-center flex-col w-full lg:w-1/2 overflow-hidden bg-gray-100 justify-center"
+<div class="min-w-10 w-full max-w-lg bg-white rounded-xl p-8 mx-auto">
+  <h2 class="text-3xl font-bold text-gray-700 mb-3 text-center">Login</h2>
+  <p class="text-center">
+    Don't have an account? <a routerLink="/signup" class="text-blue-500">Sign up</a>
+  </p>
+  <div class="flex item-center gap-3">
+    <button
+      class="btn hover:scale-105 transition-transform duration-200 flex-1 flex justify-center items-center gap-2 border border-gray-300 rounded-base py-2 mt-6 cursor-pointer"
     >
-      <div class="min-w-10 w-full max-w-lg bg-white rounded-xl p-8">
-        <h2 class="text-3xl font-bold text-gray-700 mb-3 text-center">Login</h2>
-        <p class="text-center">
-          Don't have an account? <a href="/signup" class="text-blue-500">Sign up</a>
-        </p>
-        <div class="flex item-center gap-3">
-          <button
-            class="btn hover:scale-105 transition-transform duration-200 flex-1 flex justify-center items-center gap-2 border border-gray-300 rounded-base py-2 mt-6 cursor-pointer"
-          >
-            <i class="fa-brands fa-google text-red-500"></i>
-            Google
-          </button>
-          <button
-            class="btn bg-blue-500 text-white hover:scale-105 transition-transform duration-200 flex-1 flex justify-center items-center gap-2 border border-gray-300 rounded-base py-2 mt-6 cursor-pointer"
-          >
-            <i class="fa-brands fa-facebook text-white"></i>
-            Facebook
-          </button>
-        </div>
-        <div class="my-6 grid grid-cols-[1fr_auto_1fr] items-center gap-3">
-          <div class="h-px bg-linear-to-r from-transparent via-gray-400/40 to-transparent"></div>
-          <span class="text-sm text-gray-400">or continue with email</span>
-          <div class="h-px bg-linear-to-r from-transparent via-gray-400/40 to-transparent"></div>
-        </div>
-
-        <form (ngSubmit)="onSubmit()" [formGroup]="loginForm">
-          <div class="mb-6">
-            <label for="email">Email Address</label>
-            <input
-              type="email"
-              id="email"
-              formControlName="email"
-              class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-4 py-3 pl-11 shadow-xs placeholder:text-body"
-              placeholder="name@example.com"
-              required
-            />
-            @if (loginForm.get('email')?.invalid && loginForm.get('email')?.touched) {
-              @if (loginForm.get('email')?.errors?.['required']) {
-                <p class="mt-1 text-sm text-red-600">*Email is required</p>
-              }
-              @if (loginForm.get('email')?.errors?.['email']) {
-                <p class="mt-1 text-sm text-red-600">*Email is invalid</p>
-              }
-            }
-          </div>
-
-          <div class="mb-6">
-            <label for="password">Password</label>
-            <input
-              type="password"
-              id="password"
-              formControlName="password"
-              class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-4 py-3 pl-11 shadow-xs placeholder:text-body"
-              placeholder="Create a strong password"
-              required
-            />
-            @if (loginForm.get('password')?.invalid && loginForm.get('password')?.touched) {
-              @if (loginForm.get('password')?.errors?.['required']) {
-                <p class="mt-1 text-sm text-red-600">*Password is required</p>
-              }
-              @if (loginForm.get('password')?.errors?.['pattern']) {
-                <p class="mt-1 text-sm text-red-600">
-                  *Password should be at least eight characters, at least one upper case English
-                  letter, one lower case English letter, one number and one special character
-                </p>
-              }
-            }
-          </div>
-
-          <button
-            type="submit"
-            [disabled]="isLoading || loginForm.invalid"
-            [class.bg-gray-500]="isLoading"
-            class="w-full text-white bg-linear-to-r from-blue-600 to-blue-400 box-border border border-transparent disabled:from-gray-500 disabled:to-gray-400 disabled:hover:bg-gray-500 disabled:cursor-not-allowed focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-5 py-2.5 focus:outline-none"
-          >
-            @if (isLoading) {
-              <span class="font-bold text-base me-1">Signing you in</span>
-              <i class="fa-solid fa-spinner fa-spin"></i>
-            } @else {
-              <span class="font-bold text-base me-1">Sign in</span>
-              <i class="fa-solid fa-arrow-right"></i>
-            }
-          </button>
-        </form>
-      </div>
-    </div>
+      <i class="fa-brands fa-google text-red-500"></i>
+      Google
+    </button>
+    <button
+      class="btn bg-blue-500 text-white hover:scale-105 transition-transform duration-200 flex-1 flex justify-center items-center gap-2 border border-gray-300 rounded-base py-2 mt-6 cursor-pointer"
+    >
+      <i class="fa-brands fa-facebook text-white"></i>
+      Facebook
+    </button>
   </div>
+  <div class="my-6 grid grid-cols-[1fr_auto_1fr] items-center gap-3">
+    <div class="h-px bg-linear-to-r from-transparent via-gray-400/40 to-transparent"></div>
+    <span class="text-sm text-gray-400">or continue with email</span>
+    <div class="h-px bg-linear-to-r from-transparent via-gray-400/40 to-transparent"></div>
+  </div>
+
+  <form (ngSubmit)="onSubmit()" [formGroup]="loginForm">
+    <div class="mb-6">
+      <label for="email">Email Address</label>
+      <div class="relative">
+        <input
+          type="email"
+          id="email"
+          formControlName="email"
+          class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-4 py-3 pl-11 shadow-xs placeholder:text-body"
+          placeholder="name@example.com"
+          required
+        />
+        <i class="fa-solid fa-envelope text-gray-400 absolute left-4 top-1/2 -translate-y-1/2"></i>
+      </div>
+
+      @let emailControl = loginForm.get('email');
+      @if (emailControl?.invalid && emailControl?.touched) {
+        @if (emailControl?.errors?.['required']) {
+          <p class="mt-1 text-sm text-red-600">*Email is required</p>
+        }
+        @if (loginForm.get('email')?.errors?.['email']) {
+          <p class="mt-1 text-sm text-red-600">*Email is invalid</p>
+        }
+      }
+    </div>
+
+    <div class="mb-6">
+      <label for="password">Password</label>
+      <div class="relative">
+        <input
+          type="password"
+          id="password"
+          formControlName="password"
+          class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-4 py-3 pl-11 shadow-xs placeholder:text-body"
+          placeholder="Create a strong password"
+          required
+        />
+        <i class="fa-solid fa-lock text-gray-400 absolute left-4 top-1/2 -translate-y-1/2"></i>
+      </div>
+      @let passwordControl = loginForm.get('password');
+      @if (passwordControl?.invalid && passwordControl?.touched) {
+        @if (passwordControl?.errors?.['required']) {
+          <p class="mt-1 text-sm text-red-600">*Password is required</p>
+        }
+        @if (passwordControl?.errors?.['pattern']) {
+          <p class="mt-1 text-sm text-red-600">
+            *Password should be at least eight characters, at least one upper case English letter,
+            one lower case English letter, one number and one special character
+          </p>
+        }
+      }
+    </div>
+
+    <button
+      type="submit"
+      [disabled]="isLoading || loginForm.invalid"
+      [class.bg-gray-500]="isLoading"
+      class="w-full text-white bg-linear-to-r from-blue-600 to-blue-400 box-border border border-transparent disabled:from-gray-500 disabled:to-gray-400 disabled:hover:bg-gray-500 disabled:cursor-not-allowed focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-5 py-2.5 focus:outline-none"
+    >
+      @if (isLoading) {
+        <span class="font-bold text-base me-1">Signing you in</span>
+        <i class="fa-solid fa-spinner fa-spin"></i>
+      } @else {
+        <span class="font-bold text-base me-1">Sign in</span>
+        <i class="fa-solid fa-arrow-right"></i>
+      }
+    </button>
+  </form>
 </div>

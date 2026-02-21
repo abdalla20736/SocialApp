@@ -1,0 +1,20 @@
+::ng-deep emoji-mart {
+  border: 1px solid #e5e7eb !important;
+  border-radius: 12px !important;
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+}
+
+::ng-deep emoji-mart .emoji-mart {
+  border: none !important;
+}
+
+::ng-deep emoji-mart .emoji-mart-search input {
+  border-radius: 8px !important;
+  border: 1px solid #d1d5db !important;
+  padding: 8px 12px !important;
+}
+
+::ng-deep emoji-mart .emoji-mart-category-label span {
+  font-weight: 600 !important;
+  color: #374151 !important;
+}

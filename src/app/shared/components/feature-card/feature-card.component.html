@@ -1,0 +1,9 @@
+<div class="blured-card blured-card-hover px-4 py-2 items-center">
+  <div class="size-10 min-w-10 flex justify-center items-center rounded-xl {{ backgroundColor }}">
+    <i class="fa-solid {{ icon }} {{ iconColor }}"></i>
+  </div>
+  <div>
+    <h4><ng-content select="[title]"></ng-content></h4>
+    <p class="leading-8"><ng-content select="[description]"></ng-content></p>
+  </div>
+</div>

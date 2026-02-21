@@ -4,6 +4,7 @@
 @import 'ngx-toastr/toastr';
 @plugin "flowbite/plugin";
 @source "../node_modules/flowbite";
+@import '@ctrl/ngx-emoji-mart/picker';
 
 html,
 body {
@@ -11,10 +12,13 @@ body {
 }
 body {
   margin: 0;
-  font-family: 'Cairo Variable', sans-serif;
+  font-family: 'Cairo', sans-serif;
   color: var(--color-gray-700);
 }
 
 .blured-card {
-  @apply bg-white/20 backdrop-blur-sm border border-white/30 rounded-xl flex  gap-4 text-white hover:scale-105 transition-transform duration-200;
+  @apply bg-white/20 backdrop-blur-sm border border-white/30 rounded-xl flex  gap-4 text-white;
+}
+.blured-card-hover {
+  @apply hover:scale-105 transition-transform duration-200;
 }

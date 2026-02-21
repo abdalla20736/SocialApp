@@ -1,10 +1,11 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { Navbar } from './layouts/navbar/navbar.component';
+
+import { TimeagoModule } from 'ngx-timeago';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Navbar],
+  imports: [RouterOutlet, TimeagoModule],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })

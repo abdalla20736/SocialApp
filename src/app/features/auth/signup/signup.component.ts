@@ -1,4 +1,12 @@
-import { Component, inject, OnInit, ElementRef, ViewChild } from '@angular/core';
+import {
+  Component,
+  inject,
+  OnInit,
+  ElementRef,
+  ViewChild,
+  Output,
+  EventEmitter,
+} from '@angular/core';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -16,11 +24,12 @@ import {
   AbstractControl,
   ValidationErrors,
 } from '@angular/forms';
-import { SignupRequest } from '../../../core/models/auth.model';
+import { SignupRequest } from '../../../core/models/auth/auth.model';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { debounce, debounceTime, finalize, tap } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
+import { PASSWORD_PATTERN } from '../../../core/constants/validators';
 
 type FormControls<T> = {
   [K in keyof T]: FormControl<T[K] | null>;
@@ -35,6 +44,7 @@ type FormControls<T> = {
     MatIconModule,
     ReactiveFormsModule,
     CommonModule,
+    RouterLink,
   ],
   providers: [provideNativeDateAdapter()],
   templateUrl: './signup.component.html',
@@ -42,31 +52,27 @@ type FormControls<T> = {
 })
 export class Signup implements OnInit {
   private authService = inject(AuthService);
+  private formBuilder = inject(FormBuilder);
   private router = inject(Router);
   private toastrService = inject(ToastrService);
 
-  userForm: FormGroup<FormControls<SignupRequest>>;
+  registerForm: FormGroup<FormControls<SignupRequest>>;
   isLoading = false;
+  @Output() layoutHeader = new EventEmitter<string>();
+  @Output() layoutSubHeader = new EventEmitter<string>();
 
   constructor() {
-    this.userForm = new FormGroup<FormControls<SignupRequest>>(
+    this.registerForm = this.formBuilder.group(
       {
-        email: new FormControl('', [
-          Validators.required,
-          Validators.minLength(3),
-          Validators.email,
-        ]),
-        name: new FormControl('', [Validators.required, Validators.minLength(3)]),
-        password: new FormControl('', [
-          Validators.required,
-          Validators.pattern(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/),
-        ]),
-        rePassword: new FormControl('', [Validators.required]),
-        dateOfBirth: new FormControl('', [Validators.required, this.dateValidator]),
-        gender: new FormControl('', [Validators.required]),
+        email: ['', [Validators.required, Validators.email]],
+        name: ['', [Validators.required, Validators.minLength(3)]],
+        password: ['', [Validators.required, Validators.pattern(PASSWORD_PATTERN)]],
+        rePassword: ['', [Validators.required]],
+        dateOfBirth: ['', [Validators.required, this.dateValidator]],
+        gender: ['', [Validators.required]],
       },
       { validators: this.passwordMatchValidator },
-    );
+    ) as FormGroup<FormControls<SignupRequest>>;
   }
 
   private passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
@@ -115,22 +121,30 @@ export class Signup implements OnInit {
 
   onDateChange(event: Event): void {
     const input = event.target as HTMLInputElement;
-    this.userForm.get('dateOfBirth')?.setValue(input.value);
-    this.userForm.get('dateOfBirth')?.markAsTouched();
+    this.registerForm.get('dateOfBirth')?.setValue(input.value);
+    this.registerForm.get('dateOfBirth')?.markAsTouched();
+  }
+
+  openDatePicker(): void {
+    const input = document.getElementById('dateOfBirth') as HTMLInputElement;
+    if (input) {
+      input.focus();
+      input.click();
+    }
   }
 
   onSubmit(): void {
-    const user = this.userForm.value;
+    const registeredUser = this.registerForm.value;
     const userData: SignupRequest = {
-      name: user.name || '',
-      email: user.email || '',
-      password: user.password || '',
-      rePassword: user.rePassword || '',
-      dateOfBirth: user.dateOfBirth || '',
-      gender: user.gender || '',
+      name: registeredUser.name || '',
+      email: registeredUser.email || '',
+      password: registeredUser.password || '',
+      rePassword: registeredUser.rePassword || '',
+      dateOfBirth: registeredUser.dateOfBirth || '',
+      gender: registeredUser.gender || '',
     };
 
-    if (this.userForm.valid) {
+    if (this.registerForm.valid) {
       this.isLoading = true;
       this.authService
         .register(userData)
@@ -156,7 +170,7 @@ export class Signup implements OnInit {
           },
         });
     } else {
-      this.userForm.markAllAsTouched();
+      this.registerForm.markAllAsTouched();
     }
   }
 }
