@@ -1,0 +1,34 @@
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 w-full">
+  <div class="lg:col-span-3">
+    <app-filter-sidebar
+      (filterChanged)="setFilter($event)"
+      [selectedFilter]="selectedPostsFilter"
+    ></app-filter-sidebar>
+  </div>
+  <div class="lg:col-span-3 lg:order-3">
+    <app-social-sidebar></app-social-sidebar>
+  </div>
+  <div class="lg:col-span-6 lg:order-2">
+    <app-create-post (unshiftPost)="unshiftPost($event)"></app-create-post>
+
+    <section class="latest-posts mt-4">
+      <div class="latest-posts-list flex flex-col space-y-5 mt-5">
+        @if (isLoading) {
+          <app-post-skeleton></app-post-skeleton>
+          <app-post-skeleton></app-post-skeleton>
+        } @else {
+          @for (post of filteredPosts; track post.id) {
+            <app-post-card
+              [post]="post"
+              (deletePostFromArray)="deletePostFromArray($event)"
+            ></app-post-card>
+          } @empty {
+            <div class="text-center py-10 text-gray-500">
+              <p>No posts yet. Be the first to share something!</p>
+            </div>
+          }
+        }
+      </div>
+    </section>
+  </div>
+</div>

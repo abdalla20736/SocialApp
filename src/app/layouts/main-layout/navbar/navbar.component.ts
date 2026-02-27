@@ -3,6 +3,7 @@ import { initFlowbite } from 'flowbite';
 import { AuthService } from '../../../core/services/auth.service';
 import { User } from '../../../core/models/auth/user.model';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { NotificationService } from '../../../core/services/notification.service';
 
 @Component({
   selector: 'app-navbar',
@@ -12,11 +13,19 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 })
 export class Navbar implements OnInit {
   private authService = inject(AuthService);
+  private notificationService = inject(NotificationService);
 
   user: User = this.authService.getCurrentUser();
+  unreadNotificationsCount: number = 0;
 
   ngOnInit() {
     initFlowbite();
+    this.loadUnreadNotificationsCount();
+  }
+  loadUnreadNotificationsCount() {
+    this.notificationService.getUnreadNotificationsCount().subscribe((count) => {
+      this.unreadNotificationsCount = count;
+    });
   }
 
   onLogout(event: Event): void {

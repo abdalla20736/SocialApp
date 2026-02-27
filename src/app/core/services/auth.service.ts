@@ -32,7 +32,6 @@ export class AuthService {
   login(credentails: SigninRequest): Observable<SigninResponse> {
     return this.httpClient.post<SigninResponse>(`${this.baseUrl}/users/signin`, credentails).pipe(
       tap((response) => {
-        console.log('Login response:', response);
         const expiryDuration = this.parseDuration(response.data.expiresIn);
         const expiryTimestamp = Date.now() + expiryDuration;
 
@@ -66,7 +65,7 @@ export class AuthService {
   getToken(): string {
     const token = this.cookieService.get(this.TOKEN_COOKIE_NAME);
 
-    if (!token || this.isTokenExpired(token)) {
+    if (!token || this.isTokenExpired()) {
       this.cookieService.delete(this.TOKEN_COOKIE_NAME, '/');
       this.cookieService.delete(this.TOKEN_EXPIRY_COOKIE_NAME, '/');
       return '';
@@ -83,7 +82,7 @@ export class AuthService {
     return this.currentUserSubject.value!;
   }
 
-  private isTokenExpired(token: string): boolean {
+  private isTokenExpired(): boolean {
     const expiryTimestamp = this.cookieService.get(this.TOKEN_EXPIRY_COOKIE_NAME);
 
     if (!expiryTimestamp) {

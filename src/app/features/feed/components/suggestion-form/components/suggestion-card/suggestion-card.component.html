@@ -1,0 +1,57 @@
+<div class="rounded-xl border border-slate-200 p-2.5">
+  <div class="flex items-center justify-between gap-2">
+    <button
+      type="button"
+      class="flex min-w-0 items-center gap-2 rounded-lg px-1 py-1 text-left transition hover:bg-slate-50"
+    >
+      <img
+        alt="{{ suggestedUser.name }}"
+        class="h-10 w-10 rounded-full object-cover"
+        [src]="suggestedUser.photo ? suggestedUser.photo : './images/default-profile.png'"
+        (error)="onImageError($event)"
+      />
+      <div class="min-w-0">
+        <p class="truncate text-sm font-bold text-slate-900 hover:underline">
+          {{ suggestedUser.name }}
+        </p>
+        <p class="truncate text-xs text-slate-500">
+          {{ suggestedUser.username ? `@${suggestedUser.username}` : 'route user' }}
+        </p>
+      </div></button
+    ><button
+      (click)="followUser()"
+      [disabled]="FollowingState === 'following'"
+      [ngClass]="{
+        'bg-[#e9f7ef] text-[#1f9d55]': FollowingState === 'followed',
+        'bg-[#e7f3ff] text-[#1877f2] hover:bg-[#d8ebff]': FollowingState !== 'followed',
+      }"
+      class="inline-flex items-center gap-1 rounded-full px-3 py-1.5 text-xs font-bold transition disabled:cursor-not-allowed disabled:opacity-60"
+    >
+      @if (FollowingState === 'following') {
+        <i class="fa-solid fa-spinner fa-spin"></i>
+        Updating...
+      } @else if (FollowingState === 'followed') {
+        <i class="fa-solid fa-user-check"></i>
+        Following
+      } @else {
+        <i class="fa-solid fa-user-plus"></i>
+        Follow
+      }
+    </button>
+  </div>
+
+  @if (suggestedUser.followersCount && suggestedUser.mutualFollowersCount) {
+    <div class="mt-2 items-center gap-2 text-[11px] font-semibold text-slate-500 hidden xl:flex">
+      <span class="rounded-full bg-slate-100 px-2 py-0.5"
+        >{{ suggestedUser.followersCount }} followers</span
+      >
+      <span class="rounded-full bg-[#edf4ff] px-2 py-0.5 text-[#1877f2]"
+        >{{ suggestedUser.mutualFollowersCount }} mutual</span
+      >
+    </div>
+  } @else {
+    <div class="mt-2 items-center gap-2 text-[11px] font-semibold text-slate-500 hidden xl:flex">
+      <span class="rounded-full bg-slate-100 px-2 py-0.5">0 followers</span>
+    </div>
+  }
+</div>

@@ -1,0 +1,22 @@
+<div class="block lg:hidden mb-3">
+  <button
+    (click)="ToggleSocialBar()"
+    type="button"
+    class="inline-flex w-full items-center justify-between rounded-2xl border border-slate-200 bg-white px-4 py-3 text-left shadow-sm"
+  >
+    <span class="inline-flex items-center gap-2 text-sm font-extrabold text-slate-900">
+      <i class="fa-solid fa-users text-[#1877f2]"></i>
+      Suggested Friends</span
+    ><span class="inline-flex items-center gap-2"
+      ><span class="rounded-full bg-slate-100 px-2 py-0.5 text-xs font-bold text-slate-600">5</span
+      ><span
+        class="text-xs font-bold text-[#1877f2]"
+        [textContent]="isShowedSocialBar ? 'Hide' : 'Show'"
+        >Show</span
+      ></span
+    >
+  </button>
+</div>
+<aside [class.hidden]="!isShowedSocialBar" class="h-fit xl:sticky xl:top-20 xl:block">
+  <app-suggestion-form [isSideBar]="true"></app-suggestion-form>
+</aside>

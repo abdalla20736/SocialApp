@@ -14,7 +14,6 @@ import { PASSWORD_PATTERN } from '../../../core/constants/validators';
 })
 export class Signin {
   private authService = inject(AuthService);
-  private userService = inject(UserService);
   private formBuilder = inject(FormBuilder);
   private toastrService = inject(ToastrService);
   private router = inject(Router);

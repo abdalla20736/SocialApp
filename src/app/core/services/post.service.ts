@@ -34,11 +34,7 @@ export class PostService {
       .get<PostResponse>(`${this.baseUrl}/posts`)
       .pipe(map((response) => response.data.posts));
   }
-  getUserPosts(id: string): Observable<Post[]> {
-    return this.httpClient
-      .get<PostResponse>(`${this.baseUrl}/users/${id}/posts`)
-      .pipe(map((response) => response.data.posts));
-  }
+
   getSinglePost(id: string): Observable<Post> {
     return this.httpClient
       .get<SinglePostResponse>(`${this.baseUrl}/posts/${id}`)
@@ -60,9 +56,9 @@ export class PostService {
       .put<BookmarkResponse>(`${this.baseUrl}/posts/${postId}/bookmark`, {})
       .pipe(map((response) => response.data));
   }
-  sharePost(postId: string): Observable<Post> {
+  sharePost(postId: string, body?: string): Observable<Post> {
     return this.httpClient
-      .put<SinglePostResponse>(`${this.baseUrl}/posts/${postId}/share`, {})
+      .put<SinglePostResponse>(`${this.baseUrl}/posts/${postId}/share`, { body })
       .pipe(map((response) => response.data.post));
   }
 }

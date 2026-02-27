@@ -1,0 +1,74 @@
+<div
+  class="rounded-2xl p-3 sm:p-4 border hover:bg-slate-50 mb-2"
+  (click)="navigateToPost()"
+  [ngClass]="{
+    'border-[#dbeafe] bg-[#edf4ff]': !notification.isRead,
+    'bg-white border-slate-200': notification.isRead,
+  }"
+>
+  <div class="flex items-center gap-3">
+    <div class="relative">
+      <img
+        [src]="notification.actor.photo"
+        [alt]="notification.actor.name"
+        class="size-11 rounded-full object-cover"
+      />
+
+      <div
+        [ngClass]="{
+          'text-[#1877f2]': notification.type === 'comment_post',
+          'text-rose-500': notification.type === 'like_post',
+        }"
+        class="size-5 absolute -bottom-1 -right-1 translate-0.5 bg-white rounded-full flex items-center justify-center"
+      >
+        <i
+          class="fa-regular"
+          [ngClass]="{
+            'fa-heart': notification.type === 'like_post',
+            'fa-comment': notification.type === 'comment_post',
+          }"
+        ></i>
+      </div>
+    </div>
+    <div class="w-full">
+      <div class="flex items-center justify-between">
+        <div>
+          <button class="font-extrabold hover:text-[#1877f2] hover:underline text-sm">
+            {{ notification.actor.name }}
+          </button>
+          <span
+            [textContent]="
+              notification.type === 'like_post' ? ' liked your post' : ' commented on your post'
+            "
+          ></span>
+        </div>
+        <div>
+          <span class="text-xs text-gray-500">
+            {{ notification.createdAt | timeago }}
+          </span>
+          @if (!notification.isRead) {
+            <span
+              class="ml-2 inline-block w-1 h-1 rounded-full bg-[#1877f2]"
+              aria-label="Unread notification"
+            ></span>
+          }
+        </div>
+      </div>
+
+      @if (notification.isRead) {
+        <span class="text-emerald-600 text-xs font-medium flex items-center gap-1 mt-2">
+          <i class="fa-solid fa-check"></i>
+          Read
+        </span>
+      } @else {
+        <button
+          (click)="markAsRead($event)"
+          class="flex gap-2 items-center justify-center bg-slate-50 border border-slate-200 px-2 py-1 rounded text-[11px] mt-2 font-bold cursor-pointer transition text-[#1877f2] ring-1 ring-[#dbeafe] hover:bg-[#e7f3ff]"
+        >
+          <i class="fa-solid fa-check"></i>
+          Mark as read
+        </button>
+      }
+    </div>
+  </div>
+</div>

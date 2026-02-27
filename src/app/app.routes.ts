@@ -1,5 +1,5 @@
 import { authGuard } from './core/guards/auth.guard';
-
+import { guestGuard } from './core/guards/guest.guard';
 import { Routes } from '@angular/router';
 
 export const routes: Routes = [
@@ -17,24 +17,34 @@ export const routes: Routes = [
       {
         path: 'feed',
         title: 'Home Feed | Social App',
-        loadComponent: () => import('./features/feed/feed.component').then((m) => m.Feed),
+
+        loadComponent: () => import('./features/feed/feed/feed.component').then((m) => m.Feed),
+      },
+      {
+        path: 'suggestions',
+        title: 'Suggestions | Social App',
+        loadComponent: () =>
+          import('./features/feed/suggestion/suggestion.component').then((m) => m.Suggestions),
       },
       {
         path: 'post/:id',
         loadComponent: () =>
-          import('./features/view-post-details/view-post-details.component').then(
+          import('./features/feed/view-post-details/view-post-details.component').then(
             (m) => m.ViewPostDetails,
           ),
       },
       {
         path: 'profile',
+        title: 'Profile | Social App',
         loadComponent: () => import('./features/profile/profile.component').then((m) => m.Profile),
       },
       {
         path: 'notifications',
         title: 'Notifications | Social App',
         loadComponent: () =>
-          import('./features/notifications/notifications.component').then((m) => m.Notifications),
+          import('./features/notifications/notifications/notifications.component').then(
+            (m) => m.Notifications,
+          ),
       },
       {
         path: 'settings',
@@ -48,6 +58,7 @@ export const routes: Routes = [
   },
   {
     path: '',
+    canActivate: [guestGuard],
     loadComponent: () =>
       import('./layouts/auth-layout/auth-layout.component').then((m) => m.AuthLayout),
     children: [

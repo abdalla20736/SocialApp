@@ -12,8 +12,10 @@ body {
 }
 body {
   margin: 0;
-  font-family: 'Cairo', sans-serif;
+  font-family: 'Cairo Variable', sans-serif;
   color: var(--color-gray-700);
+  line-height: 16px;
+  box-sizing: border-box;
 }
 
 .blured-card {

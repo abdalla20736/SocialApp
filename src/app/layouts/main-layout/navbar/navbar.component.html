@@ -37,11 +37,13 @@
           class="relative flex items-center gap-1.5 rounded-xl px-2.5 py-2 text-sm font-extrabold transition sm:gap-2 sm:px-3.5 hover:bg-white/90 cursor-pointer w-full overflow-hidden"
         >
           <i class="relative fa-regular fa-comment text-xl">
-            <div
-              class="absolute top-0 -right-2 -translate-y-1/2 p-1 rounded-full bg-red-500 text-white text-[8px] font-bold"
-            >
-              <span>23</span>
-            </div>
+            @if (unreadNotificationsCount > 0) {
+              <div
+                class="absolute top-0 -right-2 -translate-y-1/2 p-1 rounded-full bg-red-500 text-white text-[8px] font-bold"
+              >
+                <span> {{ unreadNotificationsCount }}</span>
+              </div>
+            }
           </i>
           <span class="hidden sm:block text-xs w-full">Notifications</span>
         </a>

@@ -1,0 +1,121 @@
+<section class="create-post bg-white rounded-2xl shadow-lg w-full p-5">
+  <div
+    class="current-profile p-2 text-white hover:bg-gray-50 transition-colors duration-200 space-y-6"
+  >
+    <form (ngSubmit)="onSubmit()">
+      <div class="flex items-center rounded-xl gap-2 mb-2">
+        <img
+          [src]="user.photo || 'images/post-default-profile.png'"
+          alt="{{ user.name }} profile picture"
+          class="rounded-full size-12 object-cover"
+        />
+        <div>
+          <p class="text-base font-extrabold text-slate-900">{{ user.name }}</p>
+          <div
+            class="mt-1 inline-flex items-center gap-2 rounded-full bg-slate-100 px-2 py-0.5 text-xs font-normal text-slate-700"
+          >
+            <i class="fa-solid fa-earth-americas"></i>
+
+            <label for="privacySelect" class="sr-only">Privacy</label>
+            <select
+              #privacySelect
+              name="privacy"
+              class="bg-transparent outline-none border-0 ring-0 text-sm p-0 px-2 pr-7 cursor-pointer"
+              [(ngModel)]="selectedPrivacy"
+            >
+              <option value="public">Public</option>
+              <option value="following">Followers</option>
+              <option value="only_me">Only me</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="relative mt-3">
+        <label for="postBody" class="sr-only">Post content</label>
+        <textarea
+          #postTextarea
+          [(ngModel)]="postContent"
+          rows="4"
+          [placeholder]="'What\'s on your mind, ' + user.name + '?'"
+          id="postBody"
+          class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-[17px] leading-relaxed text-slate-800 outline-none transition focus:border-[#1877f2] focus:bg-white"
+          name="body"
+        ></textarea>
+        <i class="fa-solid fa-lightbulb text-gray-400 absolute left-4 top-1/2 -translate-y-1/2"></i>
+      </div>
+      <div class="relative mt-2" [class.hidden]="!selectedImageUrl">
+        <img
+          [src]="selectedImageUrl"
+          alt="Preview"
+          class="max-h-60 w-full rounded-lg object-cover"
+        />
+        <button
+          type="button"
+          (click)="removePostImage()"
+          aria-label="Remove Post Image"
+          class="absolute right-2 top-2 rounded-full bg-black/60 p-1 text-white backdrop-blur-sm"
+        >
+          <i class="fa-solid fa-x"></i>
+        </button>
+      </div>
+      <div
+        class="mt-3 flex flex-wrap items-center justify-between gap-2 border-t border-gray-400/40 pt-3"
+      >
+        <div class="relative flex items-center gap-2">
+          <label
+            class="flex cursor-pointer items-center gap-2 rounded-lg px-3 py-2 text-sm font-semibold text-slate-600 transition hover:bg-slate-100"
+          >
+            <i class="fa-solid fa-image text-emerald-600"></i>
+            <span class="hidden sm:inline">Photo/video</span
+            ><input
+              accept="image/*"
+              class="hidden"
+              type="file"
+              (change)="onImageSelected($event)"
+            />
+          </label>
+          <div class="relative" #emojiPickerContainer>
+            <button
+              type="button"
+              (click)="toggleEmojiPicker()"
+              class="flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-semibold text-slate-600 transition hover:bg-slate-100 cursor-pointer"
+              [class.bg-slate-100]="showEmojiPicker"
+            >
+              <i class="fa-solid fa-smile text-amber-500"></i>
+              <span class="hidden sm:inline">Feeling/activity</span>
+            </button>
+
+            <div
+              [class.hidden]="!showEmojiPicker"
+              class="absolute left-0 top-full mt-2 z-50 shadow-2xl rounded-lg overflow-hidden"
+            >
+              <emoji-mart
+                (emojiClick)="addEmoji($event)"
+                [perLine]="8"
+                [showPreview]="false"
+                [set]="'apple'"
+                [skin]="1"
+                title="Pick an emoji"
+              ></emoji-mart>
+            </div>
+          </div>
+        </div>
+        <div class="flex items-center gap-3">
+          <button
+            type="submit"
+            [disabled]="isPostDataEmpty || isPosting"
+            class="flex items-center gap-2 rounded-lg bg-[#1877f2] px-5 py-2 text-sm font-extrabold text-white shadow-sm transition-colors hover:bg-[#166fe5] cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
+          >
+            @if (isPosting) {
+              Posting...
+            } @else {
+              Post
+            }
+
+            <i class="fa-solid fa-paper-plane text-sm"></i>
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</section>

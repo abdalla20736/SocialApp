@@ -1,10 +1,10 @@
 import { Component, inject } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
-import { FeatureCardComponent } from '../../shared/components/feature-card/feature-card.component';
+import { FeatureCard } from './feature-card/feature-card.component';
 
 @Component({
   selector: 'app-auth-layout',
-  imports: [RouterOutlet, FeatureCardComponent],
+  imports: [RouterOutlet, FeatureCard],
   templateUrl: './auth-layout.component.html',
   styleUrls: ['./auth-layout.component.css'],
 })

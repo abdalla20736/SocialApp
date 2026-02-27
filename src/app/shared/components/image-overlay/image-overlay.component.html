@@ -1,0 +1,15 @@
+<div
+  (click)="Close($event)"
+  class="fixed inset-0 z-150 flex items-center justify-center bg-black/90 p-4 sm:p-8"
+>
+  <button
+    type="button"
+    class="absolute right-4 top-4 inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white/20"
+  >
+    <i class="fa-solid fa-xmark"></i></button
+  ><img
+    alt="{{ alt }} profile photo"
+    class="max-h-full max-w-full object-contain"
+    [src]="ImageUrl"
+  />
+</div>
