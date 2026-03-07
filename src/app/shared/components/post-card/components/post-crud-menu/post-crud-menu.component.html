@@ -1,0 +1,46 @@
+<div class="post-crud-menu relative">
+  <button
+    (click)="toggleDropdown()"
+    class="ml-2 p-1 rounded-full text-gray-500 hover:bg-gray-100 transition-colors cursor-pointer"
+    title="Post options"
+  >
+    <i class="fa-solid fa-ellipsis text-sm"></i>
+  </button>
+
+  <div
+    [class.hidden]="!isDropdownOpen"
+    class="absolute right-0 top-full mt-1 z-100 bg-white rounded border-slate-200 bg-neutral-primary-medium border border-default-medium rounded-base shadow-lg w-44"
+  >
+    <ul class="py-2 text-sm text-body font-medium">
+      <li>
+        <button
+          (click)="onToggleSavePost()"
+          class="inline-flex gap-2 items-center w-full p-2 hover:bg-slate-50 rounded cursor-pointer"
+        >
+          <i class="fa-regular fa-bookmark"></i>
+          {{ isSavingPost ? 'Saving...' : isPostSaved ? 'Unsave post' : 'Save post' }}
+        </button>
+      </li>
+      @if (isPostOwner) {
+        <li>
+          <button
+            (click)="onEditPost()"
+            class="inline-flex gap-2 items-center w-full p-2 hover:bg-slate-50 rounded cursor-pointer"
+          >
+            <i class="fa-regular fa-pen-to-square"></i>
+            Edit post
+          </button>
+        </li>
+        <li>
+          <button
+            (click)="onDeletePost()"
+            class="inline-flex gap-2 items-center w-full p-2 hover:bg-rose-50 text-rose-600 rounded cursor-pointer"
+          >
+            <i class="fa-solid fa-trash"></i>
+            Delete post
+          </button>
+        </li>
+      }
+    </ul>
+  </div>
+</div>

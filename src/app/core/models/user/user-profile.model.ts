@@ -1,6 +1,8 @@
+import { User } from "../auth/user.model";
+
 export interface UserProfile {
   cover: string;
-  following: any[];
+  following: string[];
   _id: string;
   name: string;
   email: string;
@@ -8,7 +10,7 @@ export interface UserProfile {
   gender: string;
   photo: string;
   createdAt: string;
-  followers: string[];
+  followers: User[];
   bookmarks: string[];
   followersCount: number;
   followingCount: number;

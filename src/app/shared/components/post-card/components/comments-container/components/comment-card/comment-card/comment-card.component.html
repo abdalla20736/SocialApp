@@ -1,0 +1,79 @@
+<div>
+  <div class="comment-info flex gap-2 mb-2">
+    <img
+      [src]="commenterPhotoUrl || 'images/default-profile.png'"
+      alt="Profile Picture"
+      class="w-8 h-8 rounded-full object-cover"
+      (error)="onImageError()"
+    />
+    <div class="w-full">
+      <div class="bg-[#f0f2f5] px-3 py-2 rounded-xl mb-1.5 w-fit">
+        <div class="mb-1">
+          <p class="text-xs font-semibold mb-0.5">{{ commenterName }}</p>
+
+          <div
+            [class]="isReply ? '*:text-[11px] ' : '*:text-xs'"
+            class="*:text-xs *:text-gray-500 flex items-center"
+          >
+            @if (!isReply) {
+              <span>{{ commenterUsername ? '@' + commenterUsername : 'member' }}</span>
+              <span class="mx-1">·</span>
+            }
+            @if (isOlderThanTwoDays()) {
+              <span>{{ createdAt | date: 'MMM d, hh:mm a' }}</span>
+            } @else {
+              <span>{{ createdAt | timeago }}</span>
+            }
+          </div>
+        </div>
+        <div>
+          @if (isEditMode) {
+            <app-edit-form
+              [entityId]="id"
+              [isUpdating]="isUpdatingComment"
+              [content]="content"
+              (update)="onUpdate($event)"
+              (cancelEdit)="onCancelEdit()"
+            ></app-edit-form>
+          } @else {
+            <p class="mt-0.5" [class]="isReply ? 'text-xs ' : '*:text-sm'">{{ content }}</p>
+            @if (image) {
+              <img [src]="image" alt="Comment Image" class="mt-2 max-h-52 rounded object-cover" />
+            }
+          }
+        </div>
+      </div>
+      <app-comment-actions
+        [commentId]="id"
+        [commentCreatorId]="commentCreatorId"
+        [likes]="likes"
+        [repliesCount]="repliesCount"
+        [post]="post"
+        [isReply]="isReply"
+        [isLoadingCommentLike]="isLoadingCommentLike"
+        [isShowReplyForm]="isShowReplyForm"
+        [createdAt]="createdAt"
+        [isOlderThanTwoDays]="isOlderThanTwoDays()"
+        (likeComment)="onLikeComment()"
+        (replyToComment)="toggleReplyForm()"
+        (deleteComment)="onDeleteComment()"
+        (editComment)="onEditMode()"
+      ></app-comment-actions>
+      <div>
+        @if (isShowReplyForm) {
+          <app-reply-container
+            [commentId]="id"
+            [commenterName]="commenterName"
+            [commenterPhotoUrl]="commenterPhotoUrl"
+            [post]="post"
+            [replies]="_replies"
+            [repliesCount]="repliesCount"
+            [isLoadingReplies]="isLoadingReplies"
+          >
+          </app-reply-container>
+        }
+      </div>
+    </div>
+  </div>
+</div>
+<div class="mt-1.5"></div>

@@ -8,7 +8,7 @@ import {
   ValidationErrors,
   FormGroup,
 } from '@angular/forms';
-import { PASSWORD_PATTERN } from '../../../core/constants/validators';
+import { PASSWORD_PATTERN } from '../../../core/constants/validators.constant';
 import { ChangePasswordPayload } from '../../../core/models/auth/change-password.model';
 
 @Component({
@@ -52,7 +52,7 @@ export class ChangePassword {
           this.changePasswordForm.reset();
           this.isLoading = false;
           this.successMessage = true;
-         },
+        },
         error: (err) => {
           console.error('Failed to change password:', err);
           this.isLoading = false;

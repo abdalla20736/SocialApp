@@ -48,18 +48,8 @@ export class CreatePost {
   onSubmit(): void {
     if (this.postContent.trim() || this.selectedImageFile) {
       this.isPosting = true;
-      const formData = new FormData();
-
-      if (this.postContent) {
-        formData.append('body', this.postContent);
-      }
-      if (this.selectedImageFile) {
-        formData.append('image', this.selectedImageFile);
-      }
-
-      formData.append('privacy', this.selectedPrivacy);
-
-      this.postService.CreatePost(formData).subscribe({
+  
+      this.postService.createPost(this.postContent, this.selectedImageFile!, this.selectedPrivacy).subscribe({
         next: (newPost) => {
           this.onUnshiftPost(newPost);
           this.postContent = '';

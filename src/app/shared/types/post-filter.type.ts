@@ -1,1 +1,1 @@
-export type PostsFilter = 'feed' | 'community' | 'my-posts' | 'saved';
+export type PostsFilter = 'following' | 'all' | 'me' | 'bookmarks';

@@ -1,0 +1,33 @@
+<div class="rounded-xl border border-slate-200 bg-slate-50 mt-3">
+  <div class="p-3">
+    <div class="flex justify-between items-center mb-2">
+      <div class="flex items-center gap-2">
+        <img
+          [src]="sharedPost.user.photo"
+          [alt]="sharedPost.user.name"
+          class="rounded-full size-9 object-cover"
+        />
+        <div>
+          <h3 class="font-bold">{{ sharedPost.user.name }}</h3>
+          <p class="text-slate-500 text-xs truncate">Original post</p>
+        </div>
+      </div>
+      <button
+        [routerLink]="['/post/' + sharedPost._id]"
+        class="text-[#1877f2] hover:bg-[#e7f3ff] text-xs font-semibold flex gap-1 items-center"
+      >
+        Original Post
+        <i class="fa fa-external-link" aria-hidden="true"></i>
+      </button>
+    </div>
+    <p class="text-sm">{{ sharedPost.body || 'test' }}</p>
+  </div>
+  <div>
+    <app-post-image
+      [imageUrl]="sharedPost.image!"
+      [imageAlt]="sharedPost.user.name!"
+      [isSharedPost]="true"
+    >
+    </app-post-image>
+  </div>
+</div>

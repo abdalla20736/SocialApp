@@ -1,0 +1,74 @@
+<div class="fixed inset-0 z-100 flex items-center justify-center bg-slate-900/65">
+  <div [class]="data.type === 'profile' ? 'w-full max-w-140' : ''" class="bg-white rounded-lg p-5">
+    <p class="font-extrabold text-slate-900 text-lg">
+      {{ data.type === 'profile' ? 'Adjust profile photo' : 'Cover post privacy' }}
+    </p>
+    <p class="text-slate-500 text-sm mt-1">
+      {{
+        data.type === 'profile'
+          ? 'Drag to reposition and use zoom for perfect framing.'
+          : 'Choose who can see the post generated for your new cover photo.'
+      }}
+    </p>
+
+    @if (data.type === 'profile') {
+      <div class="w-full mt-4 flex items-center justify-center">
+        <div class="size-80 rounded-2xl relative overflow-hidden">
+          <img
+            #profileImage
+            class="absolute inset-0 w-full h-full object-cover"
+            [src]="data.imgUrl"
+            alt="Profile Picture"
+          />
+        </div>
+      </div>
+
+      <div class="mt-4">
+        <div class="flex items-center justify-between text-xs font-bold text-slate-500 mb-2">
+          <label for="zoom" class="block">Zoom</label>
+          <span>{{ getZoomValue() }}x</span>
+        </div>
+
+        <input
+          [(ngModel)]="zoomValue"
+          (ngModelChange)="onZoomChange(zoomValue)"
+          id="zoom"
+          type="range"
+          min="100"
+          max="300"
+          class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer mt-1"
+        />
+      </div>
+    }
+    <select
+      [(ngModel)]="privacy"
+      class="w-full py-3 px-3 border border-slate-200 rounded-lg text-sm my-4"
+      name=""
+      id=""
+    >
+      <option value="public">Public</option>
+      <option value="following">Followers</option>
+      <option value="only_me">Only me</option>
+    </select>
+    <div class="flex items-center gap-2 justify-end">
+      <button
+        (click)="onCloseModal()"
+        [disabled]="isLoading"
+        class="px-4 py-2 border border-slate-300 rounded font-bold hover:bg-slate-50 transition text-slate-600 disabled:cursor-not-allowed"
+      >
+        Cancel
+      </button>
+      <button
+        (click)="onSubmit()"
+        [disabled]="isLoading"
+        class="px-4 py-2 bg-[#1877f2] rounded font-bold transition text-white hover:bg-[#166fe5] disabled:cursor-not-allowed disabled:opacity-60"
+      >
+        @if (isLoading) {
+          Saving...
+        } @else {
+          Save {{ data.type === 'profile' ? 'photo' : 'cover' }}
+        }
+      </button>
+    </div>
+  </div>
+</div>

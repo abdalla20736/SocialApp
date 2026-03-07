@@ -1,0 +1,36 @@
+<div class="border-l border-slate-200 bg-[#f7f8fa] p-4 space-y-3 ms-4">
+  @defer (when !isLoadingReplies) {
+    @for (reply of replies; track reply._id) {
+      @if (reply) {
+        <app-comment-card
+          [id]="reply._id"
+          [commenterPhotoUrl]="reply.commentCreator.photo"
+          [commenterName]="reply.commentCreator.name"
+          [commenterUsername]="reply.commentCreator.username"
+          [commentCreatorId]="reply.commentCreator._id"
+          [likes]="reply.likes"
+          [content]="reply.content"
+          [image]="reply.image"
+          [createdAt]="reply.createdAt"
+          [isReply]="reply.isReply"
+          [post]="post"
+          [isLoadingCommentLike]="isReplyLikesSet.has(reply._id)"
+          [isUpdatingComment]="isUpdatingRepliesSet.has(reply._id)"
+          (likeComment)="onLikeReply($event)"
+          (update)="onUpdateReply($event)"
+          (deleteComment)="openDeleteModal($event)"
+        ></app-comment-card>
+      }
+    } @empty {
+      <p class="text-gray-500 text-xs">No replies yet.</p>
+    }
+  } @placeholder {
+    <p class="text-gray-500 text-xs">Loading replies...</p>
+  }
+  <p class="text-gray-500 text-xs">Replaying to {{ commenterName }}</p>
+  <app-comment-reply-creator
+    [isSubmitting]="isSubmittingReply"
+    placeholder="Write a reply..."
+    (create)="onSubmitReply($event)"
+  ></app-comment-reply-creator>
+</div>

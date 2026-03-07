@@ -1,0 +1,28 @@
+<div class="flex items-center p-1 *:transition-all *:hover:cursor-pointer *:duration-200 *:p-2">
+  <button
+    (click)="onLikeButtonAction()"
+    [ngClass]="{
+      'bg-[#e7f3ff] text-[#1877f2]': isPostLikedByOwner,
+      'text-slate-600 hover:bg-slate-100': !isPostLikedByOwner,
+    }"
+    class="w-full flex items-center justify-center gap-1 text-sm font-normal rounded"
+  >
+    <i class="fa-regular fa-thumbs-up text-lg"></i>
+    Like
+  </button>
+  <button
+    [disabled]="isLoadingComments"
+    (click)="onCommentButtonAction()"
+    class="w-full text-gray-600 flex items-center justify-center gap-1 text-sm font-normal rounded disabled:cursor-not-allowed disabled:opacity-60"
+  >
+    <i class="fa-regular fa-comment text-lg"></i>
+    {{ isLoadingComments ? 'Loading...' : 'Comment' }}
+  </button>
+  <button
+    (click)="onShareButtonAction()"
+    class="w-full text-gray-600 flex items-center justify-center gap-1 text-sm font-normal rounded"
+  >
+    <i class="fa-solid fa-share-nodes text-lg"></i>
+    Share
+  </button>
+</div>

@@ -1,14 +1,13 @@
+import { CommentCreator } from './comment-creator.model';
+
 export interface Comment {
   _id: string;
   content: string;
+  image?: string;
   commentCreator: CommentCreator;
   post: string;
+  parentComment: any;
+  likes: any[];
   createdAt: string;
-  id: string;
-}
-
-interface CommentCreator {
-  _id: string;
-  name: string;
-  photo: string;
+  repliesCount: number;
 }

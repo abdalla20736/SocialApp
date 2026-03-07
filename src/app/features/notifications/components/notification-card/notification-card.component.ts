@@ -3,11 +3,11 @@ import { Notification } from '../../../../core/models/notifications/notification
 import { CommonModule } from '@angular/common';
 import { TimeagoModule } from 'ngx-timeago';
 import { NotificationService } from '../../../../core/services/notification.service';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-notification-card',
-  imports: [CommonModule, TimeagoModule, RouterLink],
+  imports: [CommonModule, TimeagoModule],
   templateUrl: './notification-card.component.html',
   styleUrl: './notification-card.component.css',
 })

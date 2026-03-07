@@ -2,7 +2,7 @@
   <div class="lg:col-span-3">
     <app-filter-sidebar
       (filterChanged)="setFilter($event)"
-      [selectedFilter]="selectedPostsFilter"
+      [selectedFilter]="selectedFilter"
     ></app-filter-sidebar>
   </div>
   <div class="lg:col-span-3 lg:order-3">
@@ -17,10 +17,11 @@
           <app-post-skeleton></app-post-skeleton>
           <app-post-skeleton></app-post-skeleton>
         } @else {
-          @for (post of filteredPosts; track post.id) {
+          @for (post of posts; track post._id) {
             <app-post-card
               [post]="post"
               (deletePostFromArray)="deletePostFromArray($event)"
+              (addPostToArray)="unshiftPost($event)"
             ></app-post-card>
           } @empty {
             <div class="text-center py-10 text-gray-500">

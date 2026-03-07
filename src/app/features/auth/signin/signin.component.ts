@@ -4,7 +4,7 @@ import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
 import { Component, inject } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { PASSWORD_PATTERN } from '../../../core/constants/validators';
+import { PASSWORD_PATTERN } from '../../../core/constants/validators.constant';
 
 @Component({
   selector: 'app-signin',
@@ -35,7 +35,6 @@ export class Signin {
 
       this.authService.login(this.loginForm.value).subscribe({
         next: (response) => {
-          console.log('Login successful:', response);
           this.isLoading = false;
           this.toastrService.success('Login successful!', 'Success');
           this.router.navigate(['/feed']);
@@ -49,14 +48,6 @@ export class Signin {
             'Login failed. Please check your credentials and try again.';
           this.toastrService.error(errorMessage, 'Error');
         },
-      });
-    } else {
-      console.log('Form is invalid:', this.loginForm.errors);
-      Object.keys(this.loginForm.controls).forEach((key) => {
-        const control = this.loginForm.get(key);
-        if (control?.invalid) {
-          console.log(`${key} errors:`, control.errors);
-        }
       });
     }
   }

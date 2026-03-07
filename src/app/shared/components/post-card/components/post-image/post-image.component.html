@@ -1,0 +1,21 @@
+<div (click)="expandImage(imageUrl)" class="relative cursor-zoom-in">
+  @if (!isImageError) {
+    <img
+      [src]="imageUrl || ''"
+      alt="Post image"
+      class="w-full object-cover"
+      [class.max-h-[450px]]="isSharedPost"
+      (error)="onImageError()"
+    />
+  }
+
+  <div class="inset-0 absolute transition hover:bg-black/10 cursor-pointer"></div>
+</div>
+
+@if (selectedOverlayImageUrl != '') {
+  <app-image-overlay
+    [ImageUrl]="selectedOverlayImageUrl"
+    [alt]="imageAlt!"
+    (onClose)="closeImageOverlay($event)"
+  ></app-image-overlay>
+}

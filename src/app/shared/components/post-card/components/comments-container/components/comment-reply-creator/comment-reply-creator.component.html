@@ -1,0 +1,83 @@
+<div class="flex items-start gap-3 mt-4">
+  <img
+    [src]="currentUser.photo"
+    [alt]="currentUser.name"
+    class="w-9 h-9 rounded-full object-cover"
+  />
+  <div
+    class="w-full rounded-2xl border border-slate-200 bg-[#f0f2f5] px-2.5 py-1.5 focus-within:border-[#c7dafc] focus-within:bg-white"
+  >
+    <form (ngSubmit)="onSubmit()">
+      <textarea
+        #fieldTextarea
+        [(ngModel)]="textContent"
+        name="comment"
+        id="comment"
+        class="w-full resize-none bg-transparent px-2 py-1.5 text-sm leading-5 outline-none placeholder:text-slate-500 border-0 ring-0"
+        [placeholder]="placeholder"
+      ></textarea>
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <label
+            class="cursor-pointer hover:bg-slate-200 *:hover:text-emerald-500 rounded-full p-1"
+          >
+            <i class="fa-regular fa-image text-slate-500"></i>
+            <input
+              #fileInput
+              type="file"
+              accept="image/*"
+              class="hidden"
+              (change)="onFileSelected($event)"
+            />
+          </label>
+          <div class="relative" #emojiPickerContainer>
+            <button
+              (click)="toggleEmojiPicker()"
+              type="button"
+              class="hover:bg-slate-200 *:hover:text-amber-500 rounded-full p-1 cursor-pointer"
+            >
+              <i class="fa-regular fa-smile text-slate-500"></i>
+            </button>
+            <div
+              [class.hidden]="!showEmojiPicker"
+              class="absolute left-0 top-full mt-2 z-50 shadow-2xl rounded-lg overflow-hidden"
+            >
+              <emoji-mart
+                (emojiClick)="addEmoji($event)"
+                [perLine]="8"
+                [showPreview]="false"
+                [set]="'apple'"
+                [skin]="1"
+                title="Pick an emoji"
+              ></emoji-mart>
+            </div>
+          </div>
+        </div>
+        <button
+          type="submit"
+          class="bg-[#1877f2] text-white shadow-sm transition hover:bg-[#166fe5] size-9 rounded-full disabled:bg-[#9ec5ff] disabled:opacity-100 flex items-center justify-center cursor-pointer"
+          [disabled]="isSubmitButtonDisabled()"
+        >
+          @if (isSubmitting) {
+            <i class="fa-solid fa-circle-notch fa-spin"></i>
+          } @else {
+            <i class="fa-regular fa-paper-plane rotate-45 me-1"></i>
+          }
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+@if (previewUrl) {
+  <div class="relative my-2">
+    <img [src]="previewUrl" alt="Preview" class="max-h-52 rounded w-full object-cover" />
+    <button
+      type="button"
+      (click)="removeImage()"
+      class="absolute top-1 right-1 bg-black/60 text-white rounded-full p-1 hover:bg-black/80 cursor-pointer"
+    >
+      <i class="fa-solid fa-times text-xs"></i>
+    </button>
+  </div>
+}

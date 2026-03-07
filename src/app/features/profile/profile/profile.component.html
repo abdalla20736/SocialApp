@@ -1,0 +1,26 @@
+<div>
+  @if (!isProfileOwner) {
+    <app-back-button></app-back-button>
+  }
+  <app-profile-header
+    [isProfileOwner]="isProfileOwner"
+    (loadPosts)="onHeaderLoadPosts($event)"
+    [allPostsCount]="postCount"
+    [bookmarkedPostsCount]="bookmarkedPostsCount"
+  ></app-profile-header>
+  <app-profile-posts
+    #profilePosts
+    [isProfileOwner]="isProfileOwner"
+    [userId]="pendingUserId"
+    (postLoaded)="onPostsLoaded($event)"
+  ></app-profile-posts>
+
+  @if (uploadPicture$ | async; as uploadPictureData) {
+    <app-profile-upload-picture-modal
+      [data]="uploadPictureData"
+      (closeModal)="onCloseUploadPictureModal()"
+      (submitModal)="uploadPictureData.onSubmit($event)"
+      [isLoading]="(isModalLoading$ | async) || false"
+    ></app-profile-upload-picture-modal>
+  }
+</div>

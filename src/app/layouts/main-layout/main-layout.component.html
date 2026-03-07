@@ -5,5 +5,16 @@
     <div class="mx-auto max-w-7xl px-3 py-3.5">
       <router-outlet></router-outlet>
     </div>
+    @if (deleteModal$ | async; as deleteModalData) {
+      <app-delete-modal
+        [title]="deleteModalData.title"
+        [message]="deleteModalData.message"
+        [deletedItemName]="deleteModalData.deletedItemName"
+        (cancel)="closeDeleteModal()"
+        (confirm)="deleteModalData.onDelete()"
+        [isDisabled]="(isDeleting$ | async) || false"
+      ></app-delete-modal>
+    }
   </main>
 </div>
+

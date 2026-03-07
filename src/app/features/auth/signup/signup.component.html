@@ -31,7 +31,7 @@
           type="text"
           id="full-name"
           formControlName="name"
-          class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-4 py-3 pl-11 shadow-xs placeholder:text-gray-400 placeholder:text-base"
+          class="bg-neutral-secondary-medium border border-slate-200 rounded-lg text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-4 py-3 pl-11 shadow-xs placeholder:text-gray-400 placeholder:text-base"
           placeholder="Enter your full name"
         />
         <i class="fa-solid fa-user text-gray-400 absolute left-4 top-1/2 -translate-y-1/2"></i>
@@ -58,7 +58,7 @@
           type="email"
           id="email"
           formControlName="email"
-          class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-4 py-3 pl-11 shadow-xs placeholder:text-gray-400 placeholder:text-base"
+          class="bg-neutral-secondary-medium border border-slate-200 rounded-lg text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-4 py-3 pl-11 shadow-xs placeholder:text-gray-400 placeholder:text-base"
           placeholder="name@example.com"
         />
         <i class="fa-solid fa-envelope text-gray-400 absolute left-4 top-1/2 -translate-y-1/2"></i>
@@ -81,7 +81,7 @@
           type="password"
           id="password"
           formControlName="password"
-          class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-4 py-3 pl-11 shadow-xs placeholder:text-gray-400 placeholder:text-base"
+          class="bg-neutral-secondary-medium border border-slate-200 rounded-lg text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-4 py-3 pl-11 shadow-xs placeholder:text-gray-400 placeholder:text-base"
           placeholder="Create a strong password"
         />
         <i class="fa-solid fa-lock text-gray-400 absolute left-4 top-1/2 -translate-y-1/2"></i>
@@ -106,7 +106,7 @@
           type="password"
           id="confirm_password"
           formControlName="rePassword"
-          class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-4 py-3 pl-11 shadow-xs placeholder:text-gray-400 placeholder:text-base"
+          class="bg-neutral-secondary-medium border border-slate-200 rounded-lg text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-4 py-3 pl-11 shadow-xs placeholder:text-gray-400 placeholder:text-base"
           placeholder="Confirm your password"
         />
         <i class="fa-solid fa-lock text-gray-400 absolute left-4 top-1/2 -translate-y-1/2"></i>
@@ -135,7 +135,7 @@
             formControlName="dateOfBirth"
             type="text"
             (changeDate)="onDateChange($event)"
-            class="block w-full ps-9 pe-12 py-2.5 bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand px-3 py-2.5 shadow-xs placeholder:text-gray-400 placeholder:text-base"
+            class="block w-full ps-9 pe-12 py-2.5 bg-neutral-secondary-medium border border-slate-200 rounded-lg text-heading text-sm rounded-base focus:ring-brand focus:border-brand px-3 py-2.5 shadow-xs placeholder:text-gray-400 placeholder:text-base"
             [class.border-red-600]="
               registerForm.get('dateOfBirth')?.invalid && registerForm.get('dateOfBirth')?.touched
             "
@@ -178,7 +178,7 @@
           <select
             id="gender"
             formControlName="gender"
-            class="block w-full pl-11 pr-3 py-2.5 bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs placeholder:text-body"
+            class="block w-full pl-11 pr-3 py-2.5 bg-neutral-secondary-medium border border-slate-200 rounded-lg text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs placeholder:text-body"
           >
             <option value="" selected disabled>Select your gender</option>
             <option value="male">Male</option>

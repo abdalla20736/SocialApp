@@ -1,0 +1,68 @@
+<div class="flex gap-2 items-center mb-3">
+  <div class="avatar">
+    <img
+      [alt]="userName"
+      class="size-12 rounded-full border border-gray-400/20 object-cover shadow-sm"
+      [src]="userAvatarUrl || './images/post-default-profile.png'"
+    />
+  </div>
+  <div class="author-info w-full">
+    <button
+      (click)="navigateToUserProfile()"
+      class="text-sm font-semibold text-foreground hover:underline"
+    >
+      {{ userName }}
+      @if (isUpdatedCoverPhoto) {
+        <span class="font-medium text-slate-500">updated cover photo.</span>
+      } @else if (isUpdatedProfilePhoto) {
+        <span class="font-medium text-slate-500">updated profile photo.</span>
+      }
+    </button>
+    <div>
+      <div class="flex items-center gap-1 text-xs justify-between text-muted-foreground">
+        <div class="flex items-center gap-1">
+          @if (isRegularPost) {
+            <span>{{ userName }}</span>
+            <span class="mb-1">.</span>
+          }
+
+          <button
+            (click)="onOpenPost()"
+            class="rounded px-0.5 py-0.5 text-xs font-semibold text-slate-500 transition hover:bg-slate-100 hover:text-slate-700 hover:underline"
+          >
+            {{ post.createdAt | timeago }}
+          </button>
+          <span class="mb-1">.</span>
+          <div
+            class="inline-flex items-center rounded-full px-2 py-0.5 text-xs font-normal text-slate-700"
+          >
+            <i class="fa-solid fa-earth-americas text-2xs"></i>
+            @if (isPostOwner) {
+              <select
+                [(ngModel)]="privacy"
+                name="privacy"
+                (ngModelChange)="onPrivacyChanged(privacy)"
+                class="bg-transparent outline-none border-0 ring-0 text-xs p-0 px-2 pr-7 cursor-pointer"
+              >
+                <option value="public">Public</option>
+                <option value="following">Followers</option>
+                <option value="only_me">Only me</option>
+              </select>
+            } @else {
+              <span class="ps-2.5 capitalize">{{ privacy }}</span>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <app-post-crud-menu
+    [postId]="post._id!"
+    [isPostSaved]="isPostSaved"
+    [isPostOwner]="isPostOwner"
+    [isSavingPost]="isSavingPost"
+    (toggleSavePost)="onToggleSavePost()"
+    (editPost)="onEditPost()"
+    (deletePost)="onDeletePost()"
+  ></app-post-crud-menu>
+</div>

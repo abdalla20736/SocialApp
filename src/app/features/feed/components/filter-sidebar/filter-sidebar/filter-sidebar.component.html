@@ -1,0 +1,28 @@
+<div
+  class="grid grid-cols-2 lg:grid-cols-1 gap-2 lg:gap-0 rounded-2xl border border-slate-200 bg-white p-3 shadow-sm xl:sticky xl:top-20"
+>
+  <app-filter-button
+    [selectedFilter]="selectedFilter"
+    (filterChanged)="setFilter($event)"
+    title="Feed"
+    filter="following"
+  ></app-filter-button>
+  <app-filter-button
+    [selectedFilter]="selectedFilter"
+    (filterChanged)="setFilter($event)"
+    title="My Posts"
+    filter="me"
+  ></app-filter-button>
+  <app-filter-button
+    [selectedFilter]="selectedFilter"
+    (filterChanged)="setFilter($event)"
+    title="Community"
+    filter="all"
+  ></app-filter-button>
+  <app-filter-button
+    [selectedFilter]="selectedFilter"
+    (filterChanged)="setFilter($event)"
+    title="Saved"
+    filter="bookmarks"
+  ></app-filter-button>
+</div>

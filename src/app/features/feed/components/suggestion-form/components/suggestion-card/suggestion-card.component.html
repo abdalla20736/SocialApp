@@ -11,9 +11,12 @@
         (error)="onImageError($event)"
       />
       <div class="min-w-0">
-        <p class="truncate text-sm font-bold text-slate-900 hover:underline">
-          {{ suggestedUser.name }}
-        </p>
+        <button (click)="navigateToProfile()">
+          <p class="truncate text-sm font-bold text-slate-900 hover:underline">
+            {{ suggestedUser.name }}
+          </p>
+        </button>
+
         <p class="truncate text-xs text-slate-500">
           {{ suggestedUser.username ? `@${suggestedUser.username}` : 'route user' }}
         </p>

@@ -12,7 +12,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { initFlowbite } from 'flowbite';
+
 import { AuthService } from '../../../core/services/auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import {
@@ -29,7 +29,7 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { debounce, debounceTime, finalize, tap } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
-import { PASSWORD_PATTERN } from '../../../core/constants/validators';
+import { PASSWORD_PATTERN } from '../../../core/constants/validators.constant';
 
 type FormControls<T> = {
   [K in keyof T]: FormControl<T[K] | null>;
@@ -115,9 +115,7 @@ export class Signup implements OnInit {
     return null;
   }
 
-  ngOnInit() {
-    initFlowbite();
-  }
+  ngOnInit() {}
 
   onDateChange(event: Event): void {
     const input = event.target as HTMLInputElement;

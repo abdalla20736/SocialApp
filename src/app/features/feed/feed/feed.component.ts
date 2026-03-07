@@ -1,16 +1,17 @@
 import { Post } from '../../../core/models/posts/post.model';
-import { Component, inject, OnInit, ViewChild, ElementRef, HostListener } from '@angular/core';
-import { PostCard } from '../components/post-card/post-card.component';
+import { Component, inject, OnInit } from '@angular/core';
+import { PostCard } from '../../../shared/components/post-card/post-card/post-card.component';
 import { PostService } from '../../../core/services/post.service';
 import { AuthService } from '../../../core/services/auth.service';
-import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 import { FormsModule } from '@angular/forms';
 import { PostSkeleton } from '../components/post-skeleton/post-skeleton.component';
 import { SocialSidebar } from '../components/social-sidebar/social-sidebar.component';
-import { FilterSidebar } from '../components/filter-sidebar/filter-sidebar.component';
+import { FilterSidebar } from '../components/filter-sidebar/filter-sidebar/filter-sidebar.component';
 import { User } from '../../../core/models/auth/user.model';
 import { PostsFilter } from '../../../shared/types/post-filter.type';
 import { CreatePost } from '../components/create-post/create-post.component';
+import { UserService } from '../../../core/services/user.service';
+import { DeleteModalService } from '../../../core/services/delete-modal.service';
 
 @Component({
   selector: 'app-feed',
@@ -20,31 +21,15 @@ import { CreatePost } from '../components/create-post/create-post.component';
 })
 export class Feed implements OnInit {
   private authService: AuthService = inject(AuthService);
-  private postService = inject(PostService);
+  private postService: PostService = inject(PostService);
+  private userService: UserService = inject(UserService);
+  private readonly deleteModalService: DeleteModalService = inject(DeleteModalService);
+  private feedCache = new Map<PostsFilter, Post[]>();
 
   posts: Post[] = [];
   user: User = this.authService.getCurrentUser();
   isLoading: boolean = true;
-  selectedPostsFilter: PostsFilter = 'feed';
-
-  get filteredPosts() {
-    switch (this.selectedPostsFilter) {
-      case 'my-posts':
-        return this.posts.filter((post) => post.user?._id === this.user._id);
-      case 'community':
-        return this.posts
-          .filter((post) => post.privacy === 'public')
-          .sort((a, b) => {
-            const dateA = new Date(a.createdAt).getTime();
-            const dateB = new Date(b.createdAt).getTime();
-            return dateB - dateA;
-          });
-      case 'saved':
-        return this.posts.filter((post) => post.bookmarked);
-      default:
-        return this.posts;
-    }
-  }
+  selectedFilter: PostsFilter = 'following';
 
   ngOnInit(): void {
     this.loadHomeFeed();
@@ -65,10 +50,16 @@ export class Feed implements OnInit {
     }
   }
 
-  loadHomeFeed(): void {
-    this.postService.getHomeFeed().subscribe({
+  loadHomeFeed(filter: PostsFilter = 'following'): void {
+    if (this.feedCache.has(filter)) {
+      this.posts = this.feedCache.get(filter)!;
+      return;
+    }
+    this.isLoading = true;
+    this.postService.getFilteredHomeFeed(filter).subscribe({
       next: (posts) => {
         this.posts = posts;
+        this.feedCache.set(filter, posts);
         this.isLoading = false;
       },
       error: (err) => {
@@ -79,7 +70,28 @@ export class Feed implements OnInit {
     });
   }
 
+  loadBookmarks(): void {
+    if (this.feedCache.has('bookmarks')) {
+      this.posts = this.feedCache.get('bookmarks')!;
+      return;
+    }
+    this.isLoading = true;
+    this.userService.getBookMarksPosts().subscribe({
+      next: (bookmarks) => {
+        this.posts = bookmarks;
+        this.feedCache.set('bookmarks', bookmarks);
+        this.isLoading = false;
+      },
+      error: (err) => {
+        console.error('Failed to load bookmarks:', err);
+        this.posts = [];
+        this.isLoading = false;
+      },
+    });
+  }
+
   setFilter(filter: PostsFilter): void {
-    this.selectedPostsFilter = filter;
+    this.selectedFilter = filter;
+    filter === 'bookmarks' ? this.loadBookmarks() : this.loadHomeFeed(filter);
   }
 }

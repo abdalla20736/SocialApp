@@ -63,7 +63,6 @@ export class Notifications {
         this.notifications = notifications;
         this.notificationService.notifications = notifications;
         this.isLoading = false;
-        console.log(notifications);
       },
       error: (err) => {
         console.error('Failed to load notifications:', err);

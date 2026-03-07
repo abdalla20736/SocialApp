@@ -1,3 +1,4 @@
+import { APP_TITLE_SUFFIX } from './core/constants/app.constant';
 import { authGuard } from './core/guards/auth.guard';
 import { guestGuard } from './core/guards/guest.guard';
 import { Routes } from '@angular/router';
@@ -16,31 +17,38 @@ export const routes: Routes = [
       },
       {
         path: 'feed',
-        title: 'Home Feed | Social App',
+        title: `Home Feed ${APP_TITLE_SUFFIX}`,
 
         loadComponent: () => import('./features/feed/feed/feed.component').then((m) => m.Feed),
       },
       {
         path: 'suggestions',
-        title: 'Suggestions | Social App',
+        title: `Suggestions ${APP_TITLE_SUFFIX}`,
         loadComponent: () =>
           import('./features/feed/suggestion/suggestion.component').then((m) => m.Suggestions),
       },
       {
         path: 'post/:id',
         loadComponent: () =>
-          import('./features/feed/view-post-details/view-post-details.component').then(
+          import('./features/view-post-details/view-post-details.component').then(
             (m) => m.ViewPostDetails,
           ),
       },
       {
         path: 'profile',
-        title: 'Profile | Social App',
-        loadComponent: () => import('./features/profile/profile.component').then((m) => m.Profile),
+        title: `Profile ${APP_TITLE_SUFFIX}`,
+        loadComponent: () =>
+          import('./features/profile/profile/profile.component').then((m) => m.ProfileUser),
+      },
+      {
+        path: 'profile/:id',
+        title: `Profile ${APP_TITLE_SUFFIX}`,
+        loadComponent: () =>
+          import('./features/profile/profile/profile.component').then((m) => m.ProfileUser),
       },
       {
         path: 'notifications',
-        title: 'Notifications | Social App',
+        title: `Notifications ${APP_TITLE_SUFFIX}`,
         loadComponent: () =>
           import('./features/notifications/notifications/notifications.component').then(
             (m) => m.Notifications,
@@ -48,7 +56,7 @@ export const routes: Routes = [
       },
       {
         path: 'settings',
-        title: 'Change Password | Social App',
+        title: `Change Password ${APP_TITLE_SUFFIX}`,
         loadComponent: () =>
           import('./features/auth/change-password/change-password.component').then(
             (m) => m.ChangePassword,
@@ -63,11 +71,13 @@ export const routes: Routes = [
       import('./layouts/auth-layout/auth-layout.component').then((m) => m.AuthLayout),
     children: [
       {
+        title: `Create Account ${APP_TITLE_SUFFIX}`,
         path: 'signup',
         loadComponent: () =>
           import('./features/auth/signup/signup.component').then((m) => m.Signup),
       },
       {
+        title: `Sign In ${APP_TITLE_SUFFIX}`,
         path: 'login',
         loadComponent: () =>
           import('./features/auth/signin/signin.component').then((m) => m.Signin),

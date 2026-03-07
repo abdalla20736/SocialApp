@@ -92,7 +92,7 @@ export class AuthService {
     return Date.now() >= parseInt(expiryTimestamp);
   }
 
-  private setUser(user: User): void {
+  setUser(user: User): void {
     localStorage.setItem('user', JSON.stringify(user));
     this.currentUserSubject.next(user);
   }

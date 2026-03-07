@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { SuggestionForm } from '../components/suggestion-form/suggestion-form.component';
+import { SuggestionForm } from '../components/suggestion-form/suggestion-form/suggestion-form.component';
 import { Router } from '@angular/router';
 
 @Component({

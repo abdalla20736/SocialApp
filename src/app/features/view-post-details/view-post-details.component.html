@@ -1,0 +1,20 @@
+<div class="mx-auto max-w-3xl">
+  <app-back-button></app-back-button>
+  @if (isLoading) {
+    <div
+      class="bg-white rounded-2xl p-7 flex items-center justify-center shadow-sm border border-slate-200 w-full max-w-2xl"
+    >
+      <p class="text-slate-500">Loading post...</p>
+    </div>
+  } @else {
+    @if (post) {
+      <app-post-card [post]="post"></app-post-card>
+    } @else {
+      <div
+        class="bg-white rounded-2xl p-5 flex items-center justify-center shadow-sm border border-slate-200 w-full max-w-2xl"
+      >
+        <p class="text-center text-slate-500">Post not found.</p>
+      </div>
+    }
+  }
+</div>

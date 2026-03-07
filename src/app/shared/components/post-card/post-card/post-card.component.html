@@ -1,0 +1,87 @@
+<article class="post-card rounded-2xl border border-slate-200 bg-white shadow-sm">
+  <div class="p-4 mb-0">
+    <app-post-header
+      [post]="post!"
+      [userName]="userName"
+      [userAvatarUrl]="userPhoto"
+      [isUpdatedCoverPhoto]="isUpdatedCoverPhoto()"
+      [isUpdatedProfilePhoto]="isUpdatedProfilePhoto()"
+      [isRegularPost]="isRegularPost()"
+      [isPostOwner]="isPostOwner()"
+      [isPostSaved]="isPostSaved()"
+      [isSavingPost]="isSavingPost"
+      (openPost)="openPost()"
+      (privacyChanged)="onPrivacyChange($event)"
+      (toggleSavePost)="toggleBookmarkPost()"
+      (editPost)="openEditMode()"
+      (deletePost)="openDeleteModal('post', post?._id!, onConfirmDeletePost)"
+    ></app-post-header>
+
+    @if (isEditMode) {
+      <app-edit-form
+        [isPost]="true"
+        [entityId]="post!._id"
+        [content]="post!.body"
+        [isUpdating]="isUpdatingPost"
+        (update)="updatePost($event)"
+        (cancelEdit)="closeEditMode()"
+      ></app-edit-form>
+    } @else {
+      <app-post-body
+        [post]="post!"
+        [isRegularPost]="isRegularPost()"
+        [isPostSaved]="isPostSaved()"
+      ></app-post-body>
+    }
+  </div>
+
+  <app-post-stats
+    [likesCount]="post?.likesCount || 0"
+    [commentsCount]="post?.commentsCount || 0"
+    [sharesCount]="post?.sharesCount || 0"
+    (openDetaliedPostView)="openPost()"
+  >
+  </app-post-stats>
+  <div class="border-b border-slate-200 mx-4"></div>
+
+  <app-post-actions
+    [post]="post!"
+    [isLoadingComments]="isLoadingComments"
+    [isPostLikedByOwner]="isPostLikedByCurrentUser()"
+    (likeButtonAction)="toggleLikePost()"
+    (commentButtonAction)="openComments()"
+    (shareButtonAction)="openShareModal()"
+  ></app-post-actions>
+
+  @if (isShowedAllComments) {
+    <app-comments-container
+      #CommentsContainer
+      [post]="post!"
+      [comments]="comments"
+      [isLoadingComments]="isLoadingComments"
+      [isSubmittingComment]="isSubmittingComment"
+      [isUpdateingCommentSet]="isUpdateingCommentSet"
+      [isCommentLikesSet]="isCommentLikesSet"
+      (submitComment)="submitComment($event)"
+      (likeComment)="likeComment($event)"
+      (replyToComment)="replyToComment($event)"
+      (deleteComment)="openDeleteModal('comment', $event, onConfirmDeleteComment($event))"
+      (updateComment)="updateComment($event)"
+    >
+    </app-comments-container>
+  } @else {
+    <app-top-comment
+      [comment]="post?.topComment"
+      (viewAllComments)="openComments()"
+    ></app-top-comment>
+  }
+</article>
+
+@if (selectedSharePostId != '') {
+  <app-share-modal
+    [post]="post!"
+    (cancel)="closeShareModal()"
+    (confirm)="sharePost($event)"
+    [isDisabled]="isModalConfirmed"
+  ></app-share-modal>
+}

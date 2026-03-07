@@ -18,4 +18,8 @@ export class FilterButton {
   setFilter(filter: PostsFilter): void {
     this.filterChanged.emit(filter);
   }
+
+  isSelected(): boolean {
+    return this.selectedFilter === this.filter;
+  }
 }

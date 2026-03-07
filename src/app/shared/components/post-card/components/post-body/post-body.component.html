@@ -1,0 +1,24 @@
+<div>
+  @if (isRegularPost) {
+    <p class="text-sm mb-3">{{ post?.body }}</p>
+  }
+  @if (isPostSaved) {
+    <div
+      class="mb-4 inline-flex items-center gap-1 rounded-full bg-[#e7f3ff] px-2.5 py-1 text-[11px] font-bold text-[#1877f2]"
+    >
+      <i class="fa-regular fa-bookmark"></i>
+      Saved
+    </div>
+  }
+  @if (post?.sharedPost?._id) {
+    <app-shared-post-card [sharedPost]="post?.sharedPost!"></app-shared-post-card>
+  } @else {
+    @if (post?.image) {
+      <app-post-image
+        [imageUrl]="post?.image!"
+        [imageAlt]="isRegularPost ? 'Post image' : post?.user?.name!"
+      >
+      </app-post-image>
+    }
+  }
+</div>

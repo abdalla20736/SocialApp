@@ -1,0 +1,227 @@
+@if (profile) {
+  <section
+    class="profile bg-white rounded-2xl shadow-lg w-full border border-slate-200 overflow-hidden mb-5"
+  >
+    @if (!isLoading || isProfileOwner) {
+      <div
+        class="group/cover relative h-44 bg-[linear-gradient(112deg,#0f172a_0%,#1e3a5f_36%,#2b5178_72%,#5f8fb8_100%)] sm:h-52 lg:h-60"
+      >
+        <div
+          class="absolute inset-0 bg-[radial-gradient(circle_at_20%_24%,rgba(255,255,255,.14)_0%,rgba(255,255,255,0)_36%)]"
+        ></div>
+        <div
+          class="absolute inset-0 bg-[radial-gradient(circle_at_86%_12%,rgba(186,230,253,.22)_0%,rgba(186,230,253,0)_44%)]"
+        ></div>
+
+        <div class="absolute -left-16 top-10 h-36 w-36 rounded-full bg-white/8 blur-3xl"></div>
+        <div class="absolute right-8 top-6 h-48 w-48 rounded-full bg-[#c7e6ff]/10 blur-3xl"></div>
+        <div
+          class="absolute inset-x-0 bottom-0 h-20 bg-linear-to-t from-black/25 to-transparent"
+        ></div>
+        @if (profile.cover) {
+          <img [src]="profile.cover" class="w-full sm:h-52 lg:h-60 object-cover" alt="" />
+        }
+
+        <div
+          class="pointer-events-none absolute right-2 top-2 z-10 flex max-w-[90%] flex-wrap items-center justify-end gap-1.5 opacity-100 transition duration-200 sm:right-3 sm:top-3 sm:max-w-none sm:gap-2 sm:opacity-0 sm:group-hover/cover:opacity-100 sm:group-focus-within/cover:opacity-100"
+        >
+          @if (isProfileOwner) {
+            @if (profile.cover) {
+              <button
+                (click)="expandImage(profile.cover)"
+                class="pointer-events-auto inline-flex cursor-pointer items-center gap-1 rounded-lg bg-black/45 px-2 py-1 text-[11px] font-bold text-white backdrop-blur transition hover:bg-black/60 sm:gap-1.5 sm:px-3 sm:py-1.5 sm:text-xs"
+              >
+                <i class="fa-solid fa-expand"></i>
+                View cover
+              </button>
+              <label
+                class="pointer-events-auto inline-flex cursor-pointer items-center gap-1 rounded-lg bg-black/45 px-2 py-1 text-[11px] font-bold text-white backdrop-blur transition hover:bg-black/60 sm:gap-1.5 sm:px-3 sm:py-1.5 sm:text-xs"
+              >
+                <i class="fa-regular fa-camera"></i>
+                Change cover<input
+                  accept="image/*"
+                  class="hidden"
+                  (change)="onSelectedImageChange($event, true)"
+                  type="file"
+              /></label>
+              <button
+                (click)="deleteCoverPicture()"
+                class="pointer-events-auto inline-flex cursor-pointer items-center gap-1 rounded-lg bg-black/45 px-2 py-1 text-[11px] font-bold text-white backdrop-blur transition hover:bg-black/60 sm:gap-1.5 sm:px-3 sm:py-1.5 sm:text-xs"
+              >
+                <i class="fa-solid fa-trash"></i>
+                @if (isDeletingCover) {
+                  Removing...
+                } @else {
+                  Remove
+                }
+              </button>
+            } @else {
+              <label
+                class="pointer-events-auto inline-flex cursor-pointer items-center gap-1 rounded-lg bg-black/45 px-2 py-1 text-[11px] font-bold text-white backdrop-blur transition hover:bg-black/60 sm:gap-1.5 sm:px-3 sm:py-1.5 sm:text-xs"
+              >
+                <i class="fa-regular fa-camera"></i>
+                Add cover<input
+                  accept="image/*"
+                  class="hidden"
+                  (change)="onSelectedImageChange($event, true)"
+                  type="file"
+              /></label>
+            }
+          }
+        </div>
+      </div>
+      <div class="relative -mt-12 px-3 pb-5 sm:-mt-16 sm:px-8 sm:pb-6">
+        <div
+          class="space-y-6 rounded-3xl border border-white/60 bg-white/92 p-5 backdrop-blur-xl sm:p-7"
+        >
+          <div class="flex justify-between flex-col lg:flex-row gap-4 overflow-hidden">
+            <div class="flex items-center gap-4 w-full">
+              <div class="group/avatar relative shrink-0">
+                <button
+                  (click)="isProfileOwner && expandImage(profile.photo)"
+                  type="button"
+                  class="cursor-zoom-in rounded-full"
+                >
+                  <img
+                    [alt]="profile.name"
+                    class="size-28 rounded-full border-4 border-white object-cover shadow-md ring-2 ring-[#dbeafe]"
+                    [src]="profile.photo || '/images/default-profile.png'"
+                  />
+                </button>
+                @if (isProfileOwner) {
+                  <button
+                    type="button"
+                    class="absolute bottom-1 left-1 flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-white text-[#1877f2] opacity-100 shadow-sm ring-1 ring-slate-200 transition duration-200 hover:bg-slate-50 sm:opacity-0 sm:group-hover/avatar:opacity-100 sm:group-focus-within/avatar:opacity-100"
+                    title="View profile photo"
+                    aria-label="View profile photo"
+                  >
+                    <i class="fa-solid fa-expand"></i></button
+                  ><label
+                    class="absolute bottom-1 right-1 flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-[#1877f2] text-white opacity-100 shadow-sm transition duration-200 hover:bg-[#166fe5] sm:opacity-0 sm:group-hover/avatar:opacity-100 sm:group-focus-within/avatar:opacity-100"
+                  >
+                    <i class="fa-regular fa-camera"></i>
+                    <input
+                      accept="image/*"
+                      class="hidden"
+                      type="file"
+                      (change)="onSelectedImageChange($event)"
+                    />
+                  </label>
+                }
+              </div>
+              <div class="space-y-1 overflow-hidden self-end">
+                <h2 class="text-2xl font-black truncate tracking-tight text-slate-900 sm:text-4xl">
+                  {{ profile.name }}
+                </h2>
+                <p class="mt-1 text-lg font-semibold text-slate-500 sm:text-xl">
+                  @{{ profile.name }}
+                </p>
+
+                @if (isProfileOwner) {
+                  <span
+                    class="flex items-center gap-2 text-xs bg-[#eef6ff] px-3 py-1 font-bold text-[#0b57d0] rounded-full mt-3"
+                  >
+                    <i class="fa-solid fa-user-group"></i>
+                    Route Posts member
+                  </span>
+                }
+              </div>
+            </div>
+
+            @if (isProfileOwner) {
+              <div class="grid grid-cols-3 gap-2 w-full lg:*:w-42 max-h-22.5">
+                <div class="text-center border border-slate-200 rounded-2xl p-4 bg-white">
+                  <p
+                    class="text-slate-500 text-[11px] tracking-wide sm:text-xs uppercase font-bold"
+                  >
+                    FOLLOWERS
+                  </p>
+                  <p class="text-2xl font-black mt-1 sm:text-3xl">{{ profile.followersCount }}</p>
+                </div>
+                <div class="text-center border border-slate-200 rounded-2xl p-4">
+                  <p
+                    class="text-slate-500 text-[11px] tracking-wide sm:text-xs uppercase font-bold"
+                  >
+                    FOLLOWING
+                  </p>
+                  <p class="text-2xl font-black mt-1 sm:text-3xl">{{ profile.followingCount }}</p>
+                </div>
+                <div class="text-center border border-slate-200 rounded-2xl p-4">
+                  <p
+                    class="text-slate-500 text-[11px] tracking-wide sm:text-xs uppercase font-bold"
+                  >
+                    BOOKMARKS
+                  </p>
+                  <p class="text-2xl font-black mt-1 sm:text-3xl">{{ profile.bookmarksCount }}</p>
+                </div>
+              </div>
+            } @else {
+              <div class="flex items-end">
+                <button
+                  (click)="followUser()"
+                  [class]="
+                    !isFollowing
+                      ? 'bg-[#1877f2] text-white hover:bg-[#166fe5]'
+                      : 'bg-white text-slate-700 hover:bg-slate-100 border-slate-300'
+                  "
+                  type="button"
+                  class="inline-flex w-full cursor-pointer items-center justify-center text-end gap-2 rounded-lg px-4 py-2 text-sm font-extrabold transition sm:w-auto border"
+                >
+                  @if (isFollowingLoading) {
+                    <i class="fa-solid fa-user-plus"></i>
+                    Updating...
+                  } @else if (isFollowing) {
+                    <i class="fa-solid fa-check"></i>
+                    Following
+                  } @else {
+                    <i class="fa-solid fa-user-plus"></i>
+                    Follow
+                  }
+                </button>
+              </div>
+            }
+          </div>
+          @if (isProfileOwner) {
+            <div class="flex gap-4 flex-col lg:flex-row overflow-hidden">
+              <div class="space-y-2 bg-slate-50 p-4 border border-slate-200 rounded-2xl lg:w-16/10">
+                <h3 class="text-sm font-bold text-slate-800">About</h3>
+                <p class="flex gap-2 items-center">
+                  <i class="fa-regular fa-envelope"></i>
+                  {{ profile.email }}
+                </p>
+                <p class="flex gap-2 items-center">
+                  <i class="fa-solid fa-user-group"></i>
+                  Active on Route Posts
+                </p>
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-3 w-full">
+                <div class="rounded-2xl border border-[#dbeafe] bg-[#f6faff] px-4 py-3">
+                  <p class="text-xs font-bold uppercase tracking-wide text-[#1f4f96]">MY POSTS</p>
+                  <p class="mt-1 text-2xl font-black text-slate-900">{{ allPostsCount || 0 }}</p>
+                </div>
+                <div class="rounded-2xl border border-[#dbeafe] bg-[#f6faff] px-4 py-3">
+                  <p class="text-xs font-bold uppercase tracking-wide text-[#1f4f96]">
+                    Saved posts
+                  </p>
+                  <p class="mt-1 text-2xl font-black text-slate-900">
+                    {{ bookmarkedPostsCount || 0 }}
+                  </p>
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    } @else {
+      <p class="text-center my-5">Loading...</p>
+    }
+  </section>
+}
+
+@if (selectedOverlayImageUrl != '') {
+  <app-image-overlay
+    [ImageUrl]="selectedOverlayImageUrl"
+    [alt]="profile.name"
+    (onClose)="closeImageOverlay($event)"
+  ></app-image-overlay>
+}

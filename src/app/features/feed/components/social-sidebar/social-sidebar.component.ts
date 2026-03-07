@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { SuggestionForm } from '../suggestion-form/suggestion-form.component';
+import { SuggestionForm } from '../suggestion-form/suggestion-form/suggestion-form.component';
 
 @Component({
   selector: 'app-social-sidebar',
